@@ -3,6 +3,7 @@ from tkinter import messagebox
 from tkcalendar import *
 from Classes.CenterFunction import center
 from Classes.Customer import Customer
+from Classes.Booking import Booking
 
 class CusBookRoom:
     def __init__(self,root,username):
@@ -76,8 +77,8 @@ class CusBookRoom:
         mealOp = ["Room Only","Bed & Breakfast","Half Board","Full Board","All Inclusive"] # Dropdown menu options
         self.mealPlan.set("Room Only") # initial menu text
         OptionMenu(frame1,self.mealPlan ,*mealOp ).place(x=140,y=120) # Create Dropdown menu
-        Entry(frame1, textvariable = self.additionalPrice, font=('calibre',10,'normal')).place(x=320, y=120)
-        self.additionalPrice.set("Additional Price")
+        Entry(frame1, textvariable = self.additionalPrice, font=('calibre',10,'normal'),state='readonly').place(x=320, y=120)
+        self.additionalPrice.set("Type")
         Label(frame1,text ="Child Ages").place(x=600,y=120)
         Entry(frame1,textvariable = self.childAges, font=('calibre',10,'normal')).place(x=700, y=120)
         self.childAges.set("Ages under 12 - Enter as X,X,")
@@ -87,7 +88,7 @@ class CusBookRoom:
 
         Label(frame2,text ="Room ID",fg="white").place(x=20,y=10)
         Entry(frame2,textvariable = self.roomID, font=('calibre',10,'normal'),state='readonly').place(x=100, y=10)
-        Button(frame2,text="Search",relief=RAISED).place(x=280,y=7)
+        Button(frame2,text="Search",relief=RAISED,command=self.searchRoom).place(x=280,y=7)
 
         frame3 = Frame(self.root,bg="grey")
         frame3.place(x=50, y=380, width=900, height=100)
@@ -110,9 +111,39 @@ class CusBookRoom:
 
         self.root.mainloop()
     
-    """ def searchData(self):
-        option = self.clickedOption.get()
-        entered = self.dataEntered.get()
+    def searchRoom(self):
+        checkIn = self.checkINdate.get()
+        checkOut = self.checkOutdate.get()
+        noOfAdults = self.adultCount.get()
+        noOfChildren = self.childCount.get()
+        mealPlan = self.mealPlan.get()
+        childAges = self.childAges.get()
+
+        status = (Booking.compareDates(checkIn,checkOut)) 
+        count = ((type(noOfAdults) == int) or (noOfAdults == None)) and ((type(noOfChildren) == int) or (noOfChildren == None))
+        
+        if (childAges == "Ages under 12 - Enter as X,X," or childAges == 0 or childAges == '-'):
+            childAges = None
+        else:
+            childAges = childAges.split(",")
+            childAges = [int(i) for i in childAges]
+
+        if(status == True and count == True):
+            roomList = Booking.findRoom(checkIn,checkOut,noOfAdults,noOfChildren,mealPlan,childAges)
+            if(roomList != None):
+                self.roomID.set(roomList[0][0])
+                self.price.set(roomList[0][1])
+                self.total.set(roomList[0][1])
+                self.roomNo.set(roomList[0][2])
+                self.advance.set(roomList[0][1])
+                self.balance.set("0")
+            else:
+                messagebox.showerror("Error","No rooms available")
+        else:
+            messagebox.showerror("Error","Check IN date should be before Check OUT date")
+            return None
+
+        
 
         if(option != None or entered != None):
             data = Customer.getData(option,entered)
@@ -130,79 +161,7 @@ class CusBookRoom:
         else:
             messagebox.showerror("Error","Please enter data to search")
 
-    def sendCusData(self):
-        customer = Customer()
-        customer.name = self.cusname.get()
-        customer.title = self.clickedTitle.get()
-        customer.dob = self.cusdob.get()
-        customer.gender = self.clickedGen.get()
-        customer.contactNo = self.cuscontactNo.get()
-        customer.idNo = self.cusidNo.get()
-        customer.email = self.cusemail.get()
-        customer.nationality = self.cusnationality.get()
-        customer.address = self.cusaddress.get()
-        customer.username = None
-        customer.password = None
-        
-        status = customer.enterDatatoDatabase(customer.name,customer.title,customer.dob,customer.gender,customer.contactNo,customer.idNo,customer.email,customer.nationality,customer.address,customer.username,customer.password)
-
-    def updateCusData(self):
-        option = self.clickedOption.get()
-        status = True
-
-        if(option == "Customer_ID"):
-            name = self.cusname.get()
-            title = self.clickedTitle.get()
-            dob = self.cusdob.get()
-            gender = self.clickedGen.get()
-            contactNo = self.cuscontactNo.get()
-            idNo = self.cusidNo.get()
-            email = self.cusemail.get()
-            nationality = self.cusnationality.get()
-            address = self.cusaddress.get()
-            entered = self.dataEntered.get()
-
-            msg,status = Customer.updateDatatoDatabase(name,title,dob,gender,contactNo,idNo,email,nationality,address,entered)
-            messagebox.showinfo('message', msg)
-        
-        else:
-            msg = "Set search parameters to Customer_ID"
-            messagebox.showinfo('message', msg)
-
-        if(status):
-            self.cuscustomerID.set("")
-            self.cusname.set("")
-            self.clickedTitle.set("")
-            self.cusdob.set("XX.XX.XXXX")
-            self.clickedGen.set("")
-            self.cuscontactNo.set("0XXXXXXXXX")
-            self.cusidNo.set("")
-            self.cusemail.set("")
-            self.cusnationality.set("")
-            self.cusaddress.set("")
-            self.clickedOption.set("")
-            self.dataEntered.set("")
-    
-    def clearCusData(self):
-        option = self.clickedOption.get()
-        entered = self.dataEntered.get()
-        msg,status = Customer.deleteCusfromDatabase(option,entered)
-        messagebox.showinfo('message',msg)
-
-        if(status):
-            self.clickedOption.set("")
-            self.dataEntered.set("")
-            self.cuscustomerID.set("")
-            self.cusname.set("")
-            self.clickedTitle.set("")
-            self.cusdob.set("XX.XX.XXXX")
-            self.clickedGen.set("")
-            self.cuscontactNo.set("0XXXXXXXXX")
-            self.cusidNo.set("")
-            self.cusemail.set("")
-            self.cusnationality.set("")
-            self.cusaddress.set("")
-    
+    """
     def clearWindow(self):
         self.clickedOption.set("")
         self.dataEntered.set("")
