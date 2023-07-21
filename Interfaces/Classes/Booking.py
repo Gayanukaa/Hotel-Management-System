@@ -1,3 +1,4 @@
+import datetime
 import sqlite3
 from tkinter import messagebox
 
@@ -12,7 +13,7 @@ cursorRm =connection3.cursor()  #Creating a cursor to handle database
 #mealPlans=[("Bed and Breakfast","1.0"),("Half Board","1.1"),("Full Board","1.2"),("All Inclusive","1.35")]
 #cursorBk.executemany('insert into Meal_Plan_Criteria values (?,?)',mealPlans)
 
-class Rooms:
+class Booking:
     def __init__(self):
         self.roomNO = None
         self.bookingID = None
@@ -30,76 +31,96 @@ class Rooms:
         self.advance = None
         self.total = None
         self.mealPlan = None
-        self.comment = None 
-    
-    def enterDatatoDatabase(roomNo,category,floor,status,view):
-        connection2 = sqlite3.connect("Databases/Hotel_Database.db")
-        cursorRm =connection2.cursor()
-        option = "RoomNo"
-        cursorRm.execute("select * from Room_Details where %s=?" % (option),(roomNo,))
-        valideData = cursorRm.fetchall()
+        self.comment = None
 
-        if(len(valideData) == 0):
-            print(roomNo,category,floor,status,view)
-            data = [roomNo,category,floor,status,view]
-            cursorRm.execute('insert into Room_Details values(?,?,?,?,?)',data)
-            connection2.commit() #Saving database
-            msg = "Details Entered Successfully"
-            messagebox.showinfo('message', msg)
+    def compareDates(checkIn,checkOut):
+
+        # Convert the dates to datetime objects
+        checkInDate = datetime.strptime(checkIn, "%d/%m/%Y")
+        checkOutDate = datetime.strptime(checkOut, "%d/%m/%Y")
+
+        # Compare the dates and return the result
+        if checkInDate < checkOutDate:
             return True
         else:
-            msg = "Details Already Exist"
-            messagebox.showinfo('message', msg)
             return False
+    
+    def findRoom(checkIn,checkOut,noOfAdults,noOfChildren,mealPlan,childAges):
+        # 0<=Age<=6 : No charge
+        # 6<Age<=12 : Adult charge/2 
+        # Age>12 : Adult
 
-    def getData(entered):
-        try:
-            connection2 = sqlite3.connect("Databases/Hotel_Database.db")
-            cursorRm =connection2.cursor()
-            option = "RoomNo"
-            cursorRm.execute("select * from Room_Details where %s=?" % (option), (entered,))
-            valideData = cursorRm.fetchall()
-            #cursorRm.execute("select * from Room_Details where %s=?" % (option), (entered,))
-            return valideData
-        except sqlite3.Error as error:
-            msg = "Details entered not Exist"
-            messagebox.showinfo('message', msg)
-            return None
-        except IndexError as error:
-            msg = "Data not matching. Try Again"
-            messagebox.showinfo('message', msg)
-            return None
-
-    def deleteRoomfromDatabase(entered):
-        try:
-            connection2 = sqlite3.connect("Databases/Hotel_Database.db")
-            cursorRm =connection2.cursor()
-            option = "RoomNo"
-            cursorRm.execute("delete from Room_Details where %s=?" % (option), (entered,))
-            connection2.commit()
-            connection2.close()
-            msg = "Successfully deleted"
-            return msg,True
-        except sqlite3.Error as error:
-            msg = "Data entered not matching. Try Again"
-            return msg,False
-        except IndexError as error:
-            msg = "Data not matching. Try Again"
-            return msg,True
-
-    def getPrice(category):
-        try:
-            connection2 = sqlite3.connect("Databases/Hotel_Database.db")
-            cursorRm =connection2.cursor()
-            data = "Charge"
-            goal = "Room_Type"
-            constrain = category
-            cursorRm.execute("select %s from Room_Data where %s=?" % (data, goal), (constrain,))
-            valideData = cursorRm.fetchall()
-            return valideData[0][0]
-        except sqlite3.Error as error:
-            return None
+        # Adult rate =room charge /no of persons
+        # Total=(Adult rate + meal) * (No of Adult)+ (Adult Rate + meal)/2 * (No of child)+ Additional charge
+        # Total bill amount = Total*Discount
         
+        roomList=[]
+        noOfChildren = int(noOfChildren)
+        noOfAdults = int(noOfAdults)
+        connection2 = sqlite3.connect("Databases/Hotel_Database.db")
+        cursorRm =connection2.cursor()
+        noOfChildren = noOfChildren//2
+        total = noOfChildren + noOfAdults
+        option = "Capacity"
+        cursorRm.execute("select * from Room_Data where %s=?" % (option), (total,))
+        roomList = cursorRm.fetchall()
+        roomDetails = roomList[0]
+        connection2.close()
+
+        price = roomDetails[1]
+        roomType = roomDetails[0]
+
+        adultRate = price/(noOfAdults+noOfChildren)
+        childRate = []
+        if (childAges != None):
+            for i in childAges:
+                if(int(i) <= 6):
+                    childRate.append(0)
+                elif(int(i) <= 12):
+                    childRate.append(adultRate/2)
+                else:
+                    childRate.append(adultRate)
+        else:
+            childRate.append(0)
+
+        childPrices = sum(x for x in childRate if isinstance(x, int))
+        
+        # Meal Plan
+        connection2 = sqlite3.connect("Databases/Hotel_Database.db")
+        cursorRm =connection2.cursor()
+        data = "Rate"
+        goal = "Meal_Plan"
+        constrain = mealPlan
+        cursorRm.execute("select %s from Meal_Plan_Criteria where %s=?" % (data, goal), (constrain,))
+        valideData = cursorRm.fetchall()
+        mealRate = valideData[0][0]
+        connection2.close()
+
+        # Total=(Adult rate + meal) * (No of Adult)+ (Adult Rate + meal)/2 * (No of child)+ Additional charge
+        total = (adultRate*mealRate) * noOfAdults + (childPrices*mealRate) * noOfChildren
+
+        if(total<price):
+            total = price
+        
+        # Total bill amount = Total*Discount
+        # Discounts to be implemented
+
+        # Get roomNo for roomType and Available
+        connection2 = sqlite3.connect("Databases/Hotel_Database.db")
+        cursor =connection2.cursor()
+        # SQL query to select roomNo from Room_Details where roomType is the variable and Status is "Available"
+        query = f"SELECT RoomNo FROM Room_Details WHERE Category = ? AND Status = 'Available'"
+        # Execute the query with the room type as a parameter
+        cursor.execute(query, (roomType,))
+        # Fetch all the results
+        roomNos = cursor.fetchall()
+        connection2.close()
+        roomNos = roomNos[0]
+
+        advance = 0.2*total
+
+        return list(roomType,price,total,roomNos,advance)
+    
 """ 
 connection3.commit() #Saving database
 connection3.close() #Closing datbase
