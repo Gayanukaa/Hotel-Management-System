@@ -7,7 +7,7 @@ Project coded using Visual Studio Code
 Execute file to run
 
 ```bash
-  https://github.com/Gayanukaa/Hotel-Management-System/blob/f5db6001797e2f9422ab2dcac0c3e6286423a9f7/Interfaces/Landing_Page.py
+  https://github.com/Gayanukaa/Hotel-Management-System/blob/main/Interfaces/Landing_Page.py
 ```
 
 Run Hotel-Management-System/Interfaces/Landing_Page.py

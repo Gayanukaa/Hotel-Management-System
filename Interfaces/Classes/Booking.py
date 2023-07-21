@@ -56,8 +56,10 @@ class Booking:
         # Total bill amount = Total*Discount
         
         roomList=[]
-        noOfChildren = int(noOfChildren)
-        noOfAdults = int(noOfAdults)
+
+        noOfChildren = 0 if noOfChildren == '' else int(noOfChildren)
+        noOfAdults = 0 if noOfAdults == '' else int(noOfAdults)
+
         connection2 = sqlite3.connect("Databases/Hotel_Database.db")
         cursorRm =connection2.cursor()
         noOfChildren = noOfChildren//2

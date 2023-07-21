@@ -119,7 +119,6 @@ class CusBookRoom:
         childAges = self.childAges.get()
 
         mealPlan = self.mealPlan.get()
-        #set meal plan using match
         match(mealPlan):
             case "Room Only": self.additionalPrice.set(None)
             case "Bed and Breakfast": self.additionalPrice.set("24 hours room/breakfast")
@@ -127,21 +126,20 @@ class CusBookRoom:
             case "Full Board": self.additionalPrice.set("24 hours / 3 meals")
             case "All Inclusive": self.additionalPrice.set("24 hours room/ 3 meals/other")
             case _: self.additionalPrice.set("None")
-       
+
         status = (Booking.compareDates(checkIn,checkOut)) 
         
         if (childAges == "Ages under 12 - Enter as X,X," or childAges == 0 or childAges == '-'):
             childAges = None
         else:
-            childAges = childAges.split(",")
-            childAges = [int(i) for i in childAges]
-
-        if(status == True and count == True):
             try:
                 childAges = childAges.split(",")
                 childAges = [int(i) for i in childAges]
                 if(len(childAges) < int(noOfChildren)):
                     messagebox.showerror("Error","Enter all child ages")
+                    return None
+                elif(len(childAges) > int(noOfChildren)):
+                    messagebox.showerror("Error","Remove unnecessary child ages")
                     return None
             except ValueError:
                 messagebox.showerror("Error","Enter child ages correctly using comma")
@@ -164,17 +162,4 @@ class CusBookRoom:
 
         
 
-    """
-    def clearWindow(self):
-        self.clickedOption.set("")
-        self.dataEntered.set("")
-        self.cuscustomerID.set("")
-        self.cusname.set("")
-        self.clickedTitle.set("")
-        self.cusdob.set("XX.XX.XXXX")
-        self.clickedGen.set("")
-        self.cuscontactNo.set("0XXXXXXXXX")
-        self.cusidNo.set("")
-        self.cusemail.set("")
-        self.cusnationality.set("")
-        self.cusaddress.set("") """
+        self.roomID.set("")
