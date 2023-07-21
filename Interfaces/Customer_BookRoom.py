@@ -129,7 +129,6 @@ class CusBookRoom:
             case _: self.additionalPrice.set("None")
        
         status = (Booking.compareDates(checkIn,checkOut)) 
-        count = ((type(noOfAdults) == int) or (noOfAdults == None)) and ((type(noOfChildren) == int) or (noOfChildren == None))
         
         if (childAges == "Ages under 12 - Enter as X,X," or childAges == 0 or childAges == '-'):
             childAges = None
@@ -138,6 +137,17 @@ class CusBookRoom:
             childAges = [int(i) for i in childAges]
 
         if(status == True and count == True):
+            try:
+                childAges = childAges.split(",")
+                childAges = [int(i) for i in childAges]
+                if(len(childAges) < int(noOfChildren)):
+                    messagebox.showerror("Error","Enter all child ages")
+                    return None
+            except ValueError:
+                messagebox.showerror("Error","Enter child ages correctly using comma")
+                return None
+
+        if(status == True):
             roomDetails = Booking.findRoom(checkIn,checkOut,noOfAdults,noOfChildren,mealPlan,childAges)
             if(roomDetails != None):
                 self.roomID.set(roomDetails[0])

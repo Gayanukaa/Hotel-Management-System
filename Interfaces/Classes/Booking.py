@@ -34,16 +34,17 @@ class Booking:
         self.comment = None
 
     def compareDates(checkIn,checkOut):
+        month_in, day_in, year_in = map(int, checkIn.split('/'))
+        month_out, day_out, year_out = map(int, checkOut.split('/'))
 
-        # Convert the dates to datetime objects
-        checkInDate = datetime.strptime(checkIn, "%d/%m/%Y")
-        checkOutDate = datetime.strptime(checkOut, "%d/%m/%Y")
-
-        # Compare the dates and return the result
-        if checkInDate < checkOutDate:
-            return True
-        else:
+        if year_out < year_in:
             return False
+        elif year_out == year_in and month_out < month_in:
+            return False
+        elif year_out == year_in and month_out == month_in and day_out < day_in:
+            return False
+        else:
+            return True
     
     def findRoom(checkIn,checkOut,noOfAdults,noOfChildren,mealPlan,childAges):
         # 0<=Age<=6 : No charge
@@ -70,7 +71,7 @@ class Booking:
         price = roomDetails[1]
         roomType = roomDetails[0]
 
-        adultRate = price/(noOfAdults+noOfChildren)
+        adultRate = float(price/(noOfAdults+noOfChildren))
         childRate = []
         if (childAges != None):
             for i in childAges:
@@ -83,7 +84,7 @@ class Booking:
         else:
             childRate.append(0)
 
-        childPrices = sum(x for x in childRate if isinstance(x, int))
+        childPrices = sum(x for x in childRate if isinstance(x, float))
         
         # Meal Plan
         connection2 = sqlite3.connect("Databases/Hotel_Database.db")
@@ -93,14 +94,14 @@ class Booking:
         constrain = mealPlan
         cursorRm.execute("select %s from Meal_Plan_Criteria where %s=?" % (data, goal), (constrain,))
         valideData = cursorRm.fetchall()
-        mealRate = valideData[0][0]
+        mealRate = float(valideData[0][0])
         connection2.close()
 
         # Total=(Adult rate + meal) * (No of Adult)+ (Adult Rate + meal)/2 * (No of child)+ Additional charge
-        total = (adultRate*mealRate) * noOfAdults + (childPrices*mealRate) * noOfChildren
+        total = (adultRate*mealRate) * float(noOfAdults) + (childPrices*mealRate) * float(noOfChildren)
 
         if(total<price):
-            total = price
+            total = price*int(mealRate)
         
         # Total bill amount = Total*Discount
         # Discounts to be implemented
@@ -119,7 +120,7 @@ class Booking:
 
         advance = 0.2*total
 
-        return list(roomType,price,total,roomNos,advance)
+        return [roomType,price,int(total),roomNos,int(advance)]
     
 """ 
 connection3.commit() #Saving database
