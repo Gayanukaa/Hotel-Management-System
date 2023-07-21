@@ -107,7 +107,7 @@ class CusBookRoom:
 
         Button(self.root,text="Confirm",relief=RAISED).place(x=350,y=540)
         Button(self.root,text="Book",relief=RAISED).place(x=470,y=540)
-        Button(self.root,text="CLEAR",relief=RAISED).place(x=550,y=540)
+        Button(self.root,text="Clear",relief=RAISED,command=self.clearWindow(username)).place(x=570,y=540)
 
         self.root.mainloop()
     
@@ -160,6 +160,28 @@ class CusBookRoom:
             messagebox.showerror("Error","Check IN date should be before Check OUT date")
             return None
 
+    def clearWindow(self,username):
+        self.clickedOption.set("")
         
+        self.adultCount.set("")
+        self.childCount.set("")
+        self.childAges.set("Ages under 12 - Enter as X,X,")
+        self.mealPlan.set("Room Only")
+        self.additionalPrice.set("Type")
+        
+        self.username = username
+        option = "Username"
+        entered = self.username
+        if(option != None or entered != None):
+            data = Customer.getData(option,entered)
+            self.cusname.set(data[0][1])
+            self.cuscontactNo.set(data[0][5])
+        else:
+            messagebox.showerror("Error","No data found")
 
         self.roomID.set("")
+        self.price.set("")
+        self.roomNo.set("")
+        self.total.set("")
+        self.advance.set("")
+        self.balance.set("")
