@@ -74,7 +74,7 @@ class CusBookRoom:
         Entry(frame1,textvariable = self.childCount, font=('calibre',10,'normal')).place(x=700, y=70)
 
         Label(frame1,text ="Meal Plan").place(x=20,y=120)
-        mealOp = ["Room Only","Bed & Breakfast","Half Board","Full Board","All Inclusive"] # Dropdown menu options
+        mealOp = ["Room Only","Bed and Breakfast","Half Board","Full Board","All Inclusive"] # Dropdown menu options
         self.mealPlan.set("Room Only") # initial menu text
         OptionMenu(frame1,self.mealPlan ,*mealOp ).place(x=140,y=120) # Create Dropdown menu
         Entry(frame1, textvariable = self.additionalPrice, font=('calibre',10,'normal'),state='readonly').place(x=320, y=120)
@@ -116,9 +116,18 @@ class CusBookRoom:
         checkOut = self.checkOutdate.get()
         noOfAdults = self.adultCount.get()
         noOfChildren = self.childCount.get()
-        mealPlan = self.mealPlan.get()
         childAges = self.childAges.get()
 
+        mealPlan = self.mealPlan.get()
+        #set meal plan using match
+        match(mealPlan):
+            case "Room Only": self.additionalPrice.set(None)
+            case "Bed and Breakfast": self.additionalPrice.set("24 hours room/breakfast")
+            case "Half Board": self.additionalPrice.set("24 hours room/breakfast & lunch")
+            case "Full Board": self.additionalPrice.set("24 hours / 3 meals")
+            case "All Inclusive": self.additionalPrice.set("24 hours room/ 3 meals/other")
+            case _: self.additionalPrice.set("None")
+       
         status = (Booking.compareDates(checkIn,checkOut)) 
         count = ((type(noOfAdults) == int) or (noOfAdults == None)) and ((type(noOfChildren) == int) or (noOfChildren == None))
         
@@ -129,14 +138,14 @@ class CusBookRoom:
             childAges = [int(i) for i in childAges]
 
         if(status == True and count == True):
-            roomList = Booking.findRoom(checkIn,checkOut,noOfAdults,noOfChildren,mealPlan,childAges)
-            if(roomList != None):
-                self.roomID.set(roomList[0][0])
-                self.price.set(roomList[0][1])
-                self.total.set(roomList[0][1])
-                self.roomNo.set(roomList[0][2])
-                self.advance.set(roomList[0][1])
-                self.balance.set("0")
+            roomDetails = Booking.findRoom(checkIn,checkOut,noOfAdults,noOfChildren,mealPlan,childAges)
+            if(roomDetails != None):
+                self.roomID.set(roomDetails[0])
+                self.price.set(roomDetails[1])
+                self.total.set(roomDetails[2])
+                self.roomNo.set(roomDetails[3])
+                self.advance.set("Enter - Minimum(" + str(roomDetails[4]) + ")")
+
             else:
                 messagebox.showerror("Error","No rooms available")
         else:
@@ -144,22 +153,6 @@ class CusBookRoom:
             return None
 
         
-
-        if(option != None or entered != None):
-            data = Customer.getData(option,entered)
-            
-            self.cuscustomerID.set(data[0][0])
-            self.cusname.set(data[0][1])
-            self.clickedTitle.set(data[0][2])
-            self.cusdob.set(data[0][3])
-            self.clickedGen.set(data[0][4])
-            self.cuscontactNo.set(data[0][5])
-            self.cusidNo.set(data[0][6])
-            self.cusemail.set(data[0][7])
-            self.cusnationality.set(data[0][8])
-            self.cusaddress.set(data[0][9])
-        else:
-            messagebox.showerror("Error","Please enter data to search")
 
     """
     def clearWindow(self):
