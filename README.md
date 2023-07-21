@@ -14,6 +14,7 @@ Run Hotel-Management-System/Interfaces/Landing_Page.py
 
 - Libraries used - TKinter, SQLite3
 - Room booking limited to one per transaction
+- Child age considered 12
 
 ## Documentation
 

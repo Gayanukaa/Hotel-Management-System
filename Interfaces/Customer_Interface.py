@@ -85,8 +85,7 @@ class CustomerInterface:
                 connection2 = sqlite3.connect("Databases/Hotel_Database.db")
                 cursorRm =connection2.cursor()
                 noOfChildren = noOfChildren//2
-                rem = noOfChildren%2
-                total = noOfChildren + noOfAdults + rem
+                total = noOfChildren + noOfAdults
                 option = "Capacity"
                 cursorRm.execute("select * from Room_Data where %s=?" % (option), (total,))
                 bookableRooms = cursorRm.fetchall()

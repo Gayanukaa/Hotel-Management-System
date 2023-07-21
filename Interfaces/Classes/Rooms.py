@@ -134,28 +134,6 @@ class Rooms:
             print(error)
             return msg,False
 
-    def findPossibleRooms(noOfAdults,noOfChildren):
-        try:
-            noOfChildren = int(noOfChildren)
-            noOfAdults = int(noOfAdults)
-            connection2 = sqlite3.connect("Databases/Hotel_Database.db")
-            cursorRm =connection2.cursor()
-            """ if(noOfChildren % 2 == 0):
-                noOfChildren = noOfChildren//2
-                total = noOfChildren + noOfAdults
-            else:
-                total = noOfChildren + noOfAdults """
-            noOfChildren = noOfChildren//2
-            total = noOfChildren + noOfAdults
-            option = "Capacity"
-            cursorRm.execute("select * from Room_Data where %s=?" % (option), (total,))
-            rooms = cursorRm.fetchall()
-            return rooms
-        except sqlite3.Error as error:
-            return str(error)
-        except IndexError as error:
-            return str(error)
-
     def getRate(viewRoom,category):
         try:
             viewRate = 1.1

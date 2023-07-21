@@ -41,8 +41,8 @@ class CusBookRoom:
 
         if(option != None or entered != None):
             data = Customer.getData(option,entered)
-            self.cusname = data[0][1]
-            self.cuscontactNo = data[0][5]
+            self.cusname.set(data[0][1])
+            self.cuscontactNo.set(data[0][5])
         else:
             messagebox.showerror("Error","No data found")
 
@@ -52,7 +52,6 @@ class CusBookRoom:
         frame1 = Frame(self.root,bg="grey")
         frame1.place(x=50, y=100, width=900, height=170)
 
-        
         Label(frame1,text ="Name").place(x=20,y=20)
         Entry(frame1,textvariable = self.cusname, font=('calibre',10,'normal')).place(x=140,y=20)
         Label(frame1,text ="Check IN").place(x=320,y=20)
@@ -81,13 +80,13 @@ class CusBookRoom:
         self.additionalPrice.set("Additional Price")
         Label(frame1,text ="Child Ages").place(x=600,y=120)
         Entry(frame1,textvariable = self.childAges, font=('calibre',10,'normal')).place(x=700, y=120)
-        self.childAges.set("Enter as X,X,X")
+        self.childAges.set("Ages under 12 - Enter as X,X,")
 
         frame2 = Frame(self.root,bg="black")
         frame2.place(x=50, y=300, width=400, height=40)
 
         Label(frame2,text ="Room ID",fg="white").place(x=20,y=10)
-        Entry(frame2,textvariable = self.roomID, font=('calibre',10,'normal')).place(x=100, y=10)
+        Entry(frame2,textvariable = self.roomID, font=('calibre',10,'normal'),state='readonly').place(x=100, y=10)
         Button(frame2,text="Search",relief=RAISED).place(x=280,y=7)
 
         frame3 = Frame(self.root,bg="grey")
