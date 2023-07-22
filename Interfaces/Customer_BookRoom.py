@@ -35,6 +35,8 @@ class CusBookRoom:
         self.total = StringVar()
         self.advance = StringVar()
         self.balance = StringVar()
+        self.advanceLocal = None
+        self.balanceLocal = None
 
         self.username = username
         option = "Username"
@@ -153,6 +155,7 @@ class CusBookRoom:
                 self.total.set(roomDetails[2])
                 self.roomNo.set(roomDetails[3])
                 self.advance.set("Enter - Minimum(" + str(roomDetails[4]) + ")")
+                self.advanceLocal = roomDetails[4]
 
             else:
                 messagebox.showerror("Error","No rooms available")
@@ -185,3 +188,5 @@ class CusBookRoom:
         self.total.set("")
         self.advance.set("")
         self.balance.set("")
+        self.advanceLocal = None
+        self.balanceLocal = None

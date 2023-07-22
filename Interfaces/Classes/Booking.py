@@ -120,7 +120,7 @@ class Booking:
         connection2.close()
         roomNos = roomNos[0]
 
-        advance = 0.2*total
+        advance = 0.4*total
 
         return [roomType,price,int(total),roomNos,int(advance)]
     
