@@ -20,8 +20,8 @@ class CusBookRoom:
         #self.root.iconbitmap("Images/hnet.com-image.ico")  #For MacOS
         #self.root.iconphoto(False, PhotoImage(file = "Images/hnet.com-image.png")) #For Windows
 
-        self.checkINdate = StringVar()
-        self.checkOutdate = StringVar()
+        self.checkInDate = StringVar()
+        self.checkOutDate = StringVar()
         self.adultCount = StringVar()
         self.childCount = StringVar()
         self.childAges = StringVar()
@@ -58,20 +58,20 @@ class CusBookRoom:
         Label(frame1,text ="Name").place(x=20,y=20)
         Entry(frame1,textvariable = self.cusname, font=('calibre',10,'normal')).place(x=140,y=20)
         Label(frame1,text ="Check IN").place(x=320,y=20)
-        DateEntry(frame1,selectmode='day',textvariable=self.checkINdate).place(x=410,y=20)
+        DateEntry(frame1,selectmode='day',textvariable=self.checkInDate).place(x=410,y=20)
         def my_upd1(*args):
-            self.checkINdate.set(self.checkINdate.get())
-        self.checkINdate.trace('w',my_upd1)
+            self.checkInDate.set(self.checkInDate.get())
+        self.checkInDate.trace('w',my_upd1)
         Label(frame1,text ="No. of Adults").place(x=600,y=20)
         Entry(frame1,textvariable = self.adultCount, font=('calibre',10,'normal')).place(x=700, y=20)
 
         Label(frame1,text ="Contact No.").place(x=20,y=70)
         Entry(frame1,textvariable = self.cuscontactNo, font=('calibre',10,'normal')).place(x=140,y=70)
         Label(frame1,text ="Check OUT").place(x=320,y=70)
-        DateEntry(frame1,selectmode='day',textvariable=self.checkOutdate).place(x=410,y=70)
+        DateEntry(frame1,selectmode='day',textvariable=self.checkOutDate).place(x=410,y=70)
         def my_upd1(*args):
-            self.checkOutdate.set(self.checkOutdate.get())
-        self.checkOutdate.trace('w',my_upd1)
+            self.checkOutDate.set(self.checkOutDate.get())
+        self.checkOutDate.trace('w',my_upd1)
         Label(frame1,text ="No. of Childs").place(x=600,y=70)
         Entry(frame1,textvariable = self.childCount, font=('calibre',10,'normal')).place(x=700, y=70)
 
@@ -182,8 +182,19 @@ class CusBookRoom:
                 return None
 
     def createBooking(self):
+        booking = Booking()
+        booking.username = self.username
+        booking.roomID = self.roomID.get()
+        booking.checkIn = self.checkInDate.get()
+        booking.checkOut = self.checkOutDate.get()
+        booking.noOfAdults = self.adultCount.get()
+        booking.noOfChildren = self.childCount.get()
+        booking.total = self.total.get()
+        booking.roomNo = self.roomNo.get()
+        booking.advance = self.advance.get()
+        booking.mealPlan = self.mealPlan.get()
 
-        status,msg = Booking.createBooking(self.username,self.roomID,self.checkInDate,self.checkOutDate,self.adultCount,self.childCount,self.total,self.roomNo,self.advance,self.mealPlan)
+        status,msg = booking.createBooking(booking.username,booking.roomID,booking.checkIn,booking.checkIn,booking.noOfAdults,booking.noOfChildren,booking.total,booking.roomNo,booking.advance,booking.mealPlan)
 
         if(status == True):
             messagebox.showinfo("Success",msg)
