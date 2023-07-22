@@ -154,8 +154,22 @@ class Rooms:
             return str(error)
         except IndexError as error:
             return str(error)
-
-
+        
+    def bookRoom(self,roomNo):
+        try:
+            connection2 = sqlite3.connect("Databases/Hotel_Database.db")
+            cursorCus =connection2.cursor()
+            sqln = """update Room_Details set Status = ? where RoomNo = ?"""
+            data = ["Booked",roomNo]
+            cursorCus.execute(sqln,data)
+            connection2.commit()
+            return True
+        except sqlite3.Error as error:
+            print(error)
+            return False
+        except IndexError as error:
+            print(error)
+            return False
 
 """ 
 connection2.commit() #Saving database

@@ -114,8 +114,8 @@ class CusBookRoom:
         self.root.mainloop()
     
     def searchRoom(self):
-        checkIn = self.checkINdate.get()
-        checkOut = self.checkOutdate.get()
+        checkIn = self.checkInDate.get()
+        checkOut = self.checkOutDate.get()
         noOfAdults = self.adultCount.get()
         noOfChildren = self.childCount.get()
         childAges = self.childAges.get()
@@ -182,11 +182,19 @@ class CusBookRoom:
                 return None
 
     def createBooking(self):
-        pass
 
-    def clearWindow(self):  
-        self.checkINdate.set("")
-        self.checkOutdate.set("")      
+        status,msg = Booking.createBooking(self.username,self.roomID,self.checkInDate,self.checkOutDate,self.adultCount,self.childCount,self.total,self.roomNo,self.advance,self.mealPlan)
+
+        if(status == True):
+            messagebox.showinfo("Success",msg)
+            self.clearWindow()
+        else:
+            messagebox.showerror("Error",msg)
+            return None
+
+    def clearWindow(self):
+        self.checkInDate.set("")
+        self.checkOutDate.set("")        
         self.adultCount.set("")
         self.childCount.set("")
         self.childAges.set("Ages under 12 - Enter as X,X,")

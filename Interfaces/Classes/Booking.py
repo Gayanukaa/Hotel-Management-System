@@ -1,9 +1,10 @@
-import datetime
 import sqlite3
 from tkinter import messagebox
+from Classes.Customer import Customer
+from Classes.Rooms import Rooms
 
 connection3 = sqlite3.connect("Databases/Hotel_Database.db")
-cursorRm =connection3.cursor()  #Creating a cursor to handle database
+cursorBk =connection3.cursor()  #Creating a cursor to handle database
 
 #cursorBk.execute('CREATE TABLE Booking_Details ("Booking_ID" text,"Customer_ID" text,"Name" text,"Room ID" text,"Contact_No" text,"Check_IN" text,"Check_OUT" text,"No_of_Adults" text,"No_of_Children" text,"Price_for_one" text,"RoomNo" text,"Discount" text,"Advance" text,"Total" text,"Meal_Plan" text,"Comment" text)')
 #cursorBk.execute('CREATE TABLE Promo_Codes ("PromoCode" text,"Discount" text,"Start_Date" text,"End_Date" text)')
@@ -61,12 +62,12 @@ class Booking:
         noOfAdults = 0 if noOfAdults == '' else int(noOfAdults)
 
         connection2 = sqlite3.connect("Databases/Hotel_Database.db")
-        cursorRm =connection2.cursor()
+        cursorBk =connection2.cursor()
         noOfChildren = noOfChildren//2
         total = noOfChildren + noOfAdults
         option = "Capacity"
-        cursorRm.execute("select * from Room_Data where %s=?" % (option), (total,))
-        roomList = cursorRm.fetchall()
+        cursorBk.execute("select * from Room_Data where %s=?" % (option), (total,))
+        roomList = cursorBk.fetchall()
         roomDetails = roomList[0]
         connection2.close()
 
@@ -90,12 +91,12 @@ class Booking:
         
         # Meal Plan
         connection2 = sqlite3.connect("Databases/Hotel_Database.db")
-        cursorRm =connection2.cursor()
+        cursorBk =connection2.cursor()
         data = "Rate"
         goal = "Meal_Plan"
         constrain = mealPlan
-        cursorRm.execute("select %s from Meal_Plan_Criteria where %s=?" % (data, goal), (constrain,))
-        valideData = cursorRm.fetchall()
+        cursorBk.execute("select %s from Meal_Plan_Criteria where %s=?" % (data, goal), (constrain,))
+        valideData = cursorBk.fetchall()
         mealRate = float(valideData[0][0])
         connection2.close()
 
@@ -111,11 +112,9 @@ class Booking:
         # Get roomNo for roomType and Available
         connection2 = sqlite3.connect("Databases/Hotel_Database.db")
         cursor =connection2.cursor()
-        # SQL query to select roomNo from Room_Details where roomType is the variable and Status is "Available"
         query = f"SELECT RoomNo FROM Room_Details WHERE Category = ? AND Status = 'Available'"
         # Execute the query with the room type as a parameter
         cursor.execute(query, (roomType,))
-        # Fetch all the results
         roomNos = cursor.fetchall()
         connection2.close()
         roomNos = roomNos[0]
@@ -124,11 +123,64 @@ class Booking:
 
         return [roomType,price,int(total),roomNos,int(advance)]
     
+    def createBooking(self,username,roomID,checkIn,checkOut,noOfAdults,noOfChildren,total,roomNo,advance,mealPlan):
+        self.username = username
+        option = "Username"
+        entered = self.username
+        try:
+            data = Customer.getData(option,entered)
+            self.customerID = data[0][0]
+            self.name = data[0][1]
+            self.contactNo = data[0][5]
+        except:
+            messagebox.showerror("Error","No data found")
+
+        #retrieve data from a specific column
+        connection1 = sqlite3.connect("Databases/Hotel_Database.db")
+        cursorBk =connection1.cursor()
+        cursorBk.execute("SELECT Booking_ID FROM Booking_Details")
+        results = cursorBk.fetchall()
+        final = results[len(results)-1][0]
+        self.bookingID = "B00001"
+
+        self.roomID = roomID
+        self.checkIn = checkIn
+        self.checkOut = checkOut
+        self.noOfAdults = noOfAdults
+        self.noOfChildren = noOfChildren
+        self.total = total
+        self.priceForOne = self.total/(self.noOfAdults+self.noOfChildren)
+        self.roomNo = roomNo
+        self.discount = None
+        self.advance = advance
+        self.mealPlan = mealPlan
+        self.comment = None
+
+        try:
+            data = [self.bookingID,self.customerID,self.name,self.roomID,self.contactNo,self.checkIn,self.checkOut,self.noOfAdults,self.noOfChildren,self.priceForOne,self.roomNo,self.discount,self.advance,self.total,self.mealPlan,self.comment]
+            print(data)
+
+            roomBooked = Rooms.bookRoom(roomNo)
+            if(roomBooked == False):
+                msg = "Error","Room already booked"
+                status = False
+            else:
+                cursorBk.execute('insert into Booking_Details values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',data)
+                connection1.commit() #Saving database
+                connection1.close() #Closing datbase
+                msg = "Details Entered Successfully \nBookingID: " + self.bookingID
+                status = True
+        except:
+            msg = "Error"
+            status = False
+
+        return status,msg
+    
 """ 
 connection3.commit() #Saving database
 connection3.close() #Closing datbase
  """
 """
-cursorRm.execute('insert into Room_Data (View) values("City,Ocean View")')
-cursorRm.execute('insert into Room_Data (Rate) values(1.0,1.5)')
+cursorBk.execute('insert into Room_Data (View) values("City,Ocean View")')
+cursorBk.execute('insert into Room_Data (Rate) values(1.0,1.5)')
 """
