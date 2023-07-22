@@ -107,9 +107,9 @@ class CusBookRoom:
         Label(frame3,text ="Balance").place(x=600,y=70)
         Entry(frame3,textvariable = self.balance, font=('calibre',10,'normal'),state="disabled").place(x=700, y=70)
 
-        Button(self.root,text="Confirm",relief=RAISED).place(x=350,y=540)
+        Button(self.root,text="Confirm",relief=RAISED,command=self.calculateBookings).place(x=350,y=540)
         Button(self.root,text="Book",relief=RAISED).place(x=470,y=540)
-        Button(self.root,text="Clear",relief=RAISED,command=self.clearWindow(username)).place(x=570,y=540)
+        Button(self.root,text="Clear",relief=RAISED,command=self.clearWindow).place(x=570,y=540)
 
         self.root.mainloop()
     
@@ -163,25 +163,32 @@ class CusBookRoom:
             messagebox.showerror("Error","Check IN date should be before Check OUT date")
             return None
 
-    def clearWindow(self,username):
-        self.clickedOption.set("")
-        
+    def calculateBookings(self):
+        advance = self.advance.get()
+        if(advance == "" or advance == None):
+            messagebox.showerror("Error","Enter advance")
+            return None
+        else:
+            try:
+                advance = int(advance)
+                if(advance < self.advanceLocal):
+                    messagebox.showerror("Error","Enter advance - Minimum(" + str(self.advanceLocal) + ")")
+                    return None
+                else:
+                    self.balanceLocal = int(self.total.get()) - advance
+                    self.balance.set(self.balanceLocal)
+            except ValueError:
+                messagebox.showerror("Error","Enter advance correctly")
+                return None
+
+    def clearWindow(self):  
+        self.checkINdate.set("")
+        self.checkOutdate.set("")      
         self.adultCount.set("")
         self.childCount.set("")
         self.childAges.set("Ages under 12 - Enter as X,X,")
         self.mealPlan.set("Room Only")
         self.additionalPrice.set("Type")
-        
-        self.username = username
-        option = "Username"
-        entered = self.username
-        if(option != None or entered != None):
-            data = Customer.getData(option,entered)
-            self.cusname.set(data[0][1])
-            self.cuscontactNo.set(data[0][5])
-        else:
-            messagebox.showerror("Error","No data found")
-
         self.roomID.set("")
         self.price.set("")
         self.roomNo.set("")
