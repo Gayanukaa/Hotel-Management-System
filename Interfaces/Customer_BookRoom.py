@@ -108,7 +108,7 @@ class CusBookRoom:
         Entry(frame3,textvariable = self.balance, font=('calibre',10,'normal'),state="disabled").place(x=700, y=70)
 
         Button(self.root,text="Confirm",relief=RAISED,command=self.calculateBookings).place(x=350,y=540)
-        Button(self.root,text="Book",relief=RAISED).place(x=470,y=540)
+        Button(self.root,text="Book",relief=RAISED,command=self.createBooking).place(x=470,y=540)
         Button(self.root,text="Clear",relief=RAISED,command=self.clearWindow).place(x=570,y=540)
 
         self.root.mainloop()
@@ -180,6 +180,9 @@ class CusBookRoom:
             except ValueError:
                 messagebox.showerror("Error","Enter advance correctly")
                 return None
+
+    def createBooking(self):
+        pass
 
     def clearWindow(self):  
         self.checkINdate.set("")

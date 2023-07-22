@@ -15,7 +15,7 @@ class CustomerSignUp:
         imgSignUp =  PhotoImage(file="Images/Backgrounds/Gradient_background_3.png")
         Label(self.root, image=imgSignUp).place(x=0, y=0,relwidth=1,relheight=1)
 
-        self.root.iconbitmap("Images/hnet.com-image.ico")  #For MacOS
+        #self.root.iconbitmap("Images/hnet.com-image.ico")  #For MacOS
         #self.root.iconphoto(False, PhotoImage(file = "Images/hnet.com-image.png")) #For Windows        
 
         self.cusname= StringVar()

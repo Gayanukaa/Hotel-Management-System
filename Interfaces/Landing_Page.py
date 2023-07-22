@@ -11,7 +11,6 @@ class Login:
         self.root.resizable(False, False)
         center(self.root,1000,600)
 
-        # ======Background image==========
         imgLogin =  PhotoImage(file="Images/Hotel_Login.png")
         Label(self.root, image=imgLogin).place(x=0, y=0,relwidth=1,relheight=1)
 
