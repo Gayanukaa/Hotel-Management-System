@@ -153,7 +153,7 @@ class CusBookRoom:
                 self.roomID.set(roomDetails[0])
                 self.price.set(roomDetails[1])
                 self.total.set(roomDetails[2])
-                self.roomNo.set(roomDetails[3])
+                self.roomNo.set(roomDetails[3][0])
                 self.advance.set("Enter - Minimum(" + str(roomDetails[4]) + ")")
                 self.advanceLocal = roomDetails[4]
 
@@ -194,7 +194,7 @@ class CusBookRoom:
         booking.advance = self.advance.get()
         booking.mealPlan = self.mealPlan.get()
 
-        status,msg = booking.createBooking(booking.username,booking.roomID,booking.checkIn,booking.checkIn,booking.noOfAdults,booking.noOfChildren,booking.total,booking.roomNo,booking.advance,booking.mealPlan)
+        status,msg = booking.createBooking(booking.username,booking.roomID,booking.checkIn,booking.checkOut,booking.noOfAdults,booking.noOfChildren,booking.total,booking.roomNo,booking.advance,booking.mealPlan)
 
         if(status == True):
             messagebox.showinfo("Success",msg)

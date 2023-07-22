@@ -135,14 +135,13 @@ class Booking:
         except:
             messagebox.showerror("Error","No data found")
 
-        #retrieve data from a specific column
         connection1 = sqlite3.connect("Databases/Hotel_Database.db")
         cursorBk =connection1.cursor()
         cursorBk.execute("SELECT Booking_ID FROM Booking_Details")
         results = cursorBk.fetchall()
-        #final = results[len(results)-1][0]
-        self.bookingID = "B00001"
         connection1.close()
+        final = results[len(results)-1][0]
+        self.bookingID = final[0] + str(int(final[1:])+1).zfill(5)
 
         self.roomID = roomID
         self.checkIn = checkIn
@@ -157,7 +156,6 @@ class Booking:
         self.mealPlan = mealPlan
         self.comment = None
 
-        # try:
         data = [self.bookingID,self.customerID,self.name,self.roomID,self.contactNo,self.checkIn,self.checkOut,self.noOfAdults,self.noOfChildren,self.priceForOne,self.roomNo,self.discount,self.advance,self.total,self.mealPlan,self.comment]
         print(data)
 
@@ -165,21 +163,22 @@ class Booking:
         room.roomNO = roomNo
 
         roomBooked = room.bookRoom(roomNo)
-        if(roomBooked == False):
-            msg = "Error","Room already booked"
-            status = False
-        else:
-            connection1 = sqlite3.connect("Databases/Hotel_Database.db")
-            cursorBk =connection1.cursor()
-            cursorBk.execute('insert into Booking_Details values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',data)
-            connection1.commit() #Saving database
-            connection1.close() #Closing datbase
-            msg = "Details Entered Successfully \nBookingID: " + self.bookingID
-            status = True
-        """except Exception:
+        try:
+            if(roomBooked == False):
+                msg = "Error","Room already booked"
+                status = False
+            else:
+                connection1 = sqlite3.connect("Databases/Hotel_Database.db")
+                cursorBk =connection1.cursor()
+                cursorBk.execute('insert into Booking_Details values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',data)
+                connection1.commit() #Saving database
+                connection1.close() #Closing datbase
+                msg = "Details Entered Successfully \nBookingID: " + self.bookingID
+                status = True
+        except Exception:
             msg = str(Exception)
             print(msg)
-            status = False"""
+            status = False
 
         return status,msg
     

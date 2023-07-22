@@ -163,6 +163,7 @@ class Rooms:
             data = ["Booked",roomNo]
             cursorCus.execute(sqln,data)
             connection2.commit()
+            connection2.close()
             return True
         except sqlite3.Error as error:
             print(error)
