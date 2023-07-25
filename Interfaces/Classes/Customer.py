@@ -10,6 +10,7 @@ cursorCus =connection1.cursor()  #Creating a cursor to handle database
 
 class Customer:
     def __init__(self):
+        self.customerID = None
         self.name = None
         self.title = None
         self.dob = None
@@ -191,31 +192,33 @@ class Customer:
             print(error)
             return False
         
+    def bookingCompleted(self,customerID):
+        try:
+            connection1 = sqlite3.connect("Databases/Hotel_Database.db")
+            cursorCus =connection1.cursor()
+            data = "Status"
+            goal = "Customer_ID"
+            constrain = customerID
+            cursorCus.execute("select %s from Customer_Data where %s=?" % (data, goal), (constrain,))
+            valideData = cursorCus.fetchall()
+            status = valideData[0][0]
 
-
-
-
-
-
-
-
-"""
-class Window():
-    def __init__(self):
-  
-        # Creating the tkinter Window
-        self.login = Tk()
-        self.login.geometry("200x100")
-  
-        # Button for closing
-        exit_button = Button(self.root, text="Exit", command=self.Close)
-        exit_button.pack(pady=20)
-  
-        self.root.mainloop()
-  
-    # Function for closing window
-    def Close(self):
-        self.root.destroy()
+            if(status == "Booked"):
+                connection1.close()
+                return False
+            else:
+                sqln = """update Customer_Data set Status = ? where Customer_ID = ?"""
+                data = ["Booked",customerID]
+                cursorCus.execute(sqln,data)
+                connection1.commit()
+                connection1.close()
+                return True
+        except sqlite3.Error as error:
+            print(error)
+            return False
+        except IndexError as error:
+            print(error)
+            return False
   
 # Running test window
 #test = Window()
@@ -227,4 +230,4 @@ connection1.commit() #Saving database
 connection1.close() #Closing datbase
 """
 #cursorCus.execute("update Customer_Data set Name = %s,Title = %s,Date_of_Birth = %s,Gender = %s,Contact_No = %s,ID_No = %s,Email = %s,Nationality = %s, Address = %s where %s=?;" % (name,title,dob,gender,contactNo,idNo,email,nationality,address,option), (entered,))
-#sqln = """update Customer_Data set Name = ?,Title = ?,Date_of_Birth = ?,Gender = ?,Contact_No = ?,ID_No = ?,Email = ?,Nationality = ?, Address = ? where ?=?"""
+#sqln = ""#update Customer_Data set Name = ?,Title = ?,Date_of_Birth = ?,Gender = ?,Contact_No = ?,ID_No = ?,Email = ?,Nationality = ?, Address = ? where ?=?"""

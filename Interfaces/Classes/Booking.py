@@ -162,10 +162,17 @@ class Booking:
         room = Rooms()
         room.roomNO = roomNo
 
+        cusomter = Customer()
+        cusomter.customerID = self.customerID
+
         roomBooked = room.bookRoom(roomNo)
+        customerBooked = cusomter.bookingCompleted(self.customerID)
         try:
             if(roomBooked == False):
                 msg = "Error","Room already booked"
+                status = False
+            elif(customerBooked == False):
+                msg = "Error","Customer already booked"
                 status = False
             else:
                 connection1 = sqlite3.connect("Databases/Hotel_Database.db")

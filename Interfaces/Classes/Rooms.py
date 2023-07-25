@@ -158,10 +158,10 @@ class Rooms:
     def bookRoom(self,roomNo):
         try:
             connection2 = sqlite3.connect("Databases/Hotel_Database.db")
-            cursorCus =connection2.cursor()
+            cursorRm =connection2.cursor()
             sqln = """update Room_Details set Status = ? where RoomNo = ?"""
             data = ["Booked",roomNo]
-            cursorCus.execute(sqln,data)
+            cursorRm.execute(sqln,data)
             connection2.commit()
             connection2.close()
             return True
