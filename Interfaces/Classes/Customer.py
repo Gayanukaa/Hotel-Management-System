@@ -220,8 +220,6 @@ class Customer:
             print(error)
             return False
   
-# Running test window
-#test = Window()
 """
 #cursorCus.execute('delete from Customer_Data where Name="Nimal Bandara"')
 

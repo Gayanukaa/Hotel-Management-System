@@ -165,23 +165,24 @@ class Booking:
         cusomter = Customer()
         cusomter.customerID = self.customerID
 
-        roomBooked = room.bookRoom(roomNo)
         customerBooked = cusomter.bookingCompleted(self.customerID)
         try:
-            if(roomBooked == False):
-                msg = "Error","Room already booked"
-                status = False
-            elif(customerBooked == False):
+            if(customerBooked == False):
                 msg = "Error","Customer already booked"
                 status = False
             else:
-                connection1 = sqlite3.connect("Databases/Hotel_Database.db")
-                cursorBk =connection1.cursor()
-                cursorBk.execute('insert into Booking_Details values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',data)
-                connection1.commit() #Saving database
-                connection1.close() #Closing datbase
-                msg = "Details Entered Successfully \nBookingID: " + self.bookingID
-                status = True
+                roomBooked = room.bookRoom(roomNo)
+                if(roomBooked == False):
+                    msg = "Error","Room already booked"
+                    status = False
+                else:
+                    connection1 = sqlite3.connect("Databases/Hotel_Database.db")
+                    cursorBk =connection1.cursor()
+                    cursorBk.execute('insert into Booking_Details values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',data)
+                    connection1.commit() #Saving database
+                    connection1.close() #Closing datbase
+                    msg = "Details Entered Successfully \nBookingID: " + self.bookingID
+                    status = True
         except Exception:
             msg = str(Exception)
             print(msg)
@@ -193,7 +194,3 @@ class Booking:
 connection3.commit() #Saving database
 connection3.close() #Closing datbase
  """
-"""
-cursorBk.execute('insert into Room_Data (View) values("City,Ocean View")')
-cursorBk.execute('insert into Room_Data (Rate) values(1.0,1.5)')
-"""
