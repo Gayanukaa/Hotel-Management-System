@@ -176,7 +176,7 @@ class AdminCusUpdate:
             self.cusaddress.set("")
     
     def clearWindow(self):
-        self.clickedOption.set("")
+        self.clickedOption.set("Customer_ID")
         self.dataEntered.set("")
         self.cuscustomerID.set("")
         self.cusname.set("")

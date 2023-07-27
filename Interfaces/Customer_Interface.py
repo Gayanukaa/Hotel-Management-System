@@ -7,7 +7,7 @@ from Classes.CenterFunction import center
 from Classes.Customer import Customer
 from Customer_Profile import CustomerProfile
 from Customer_BookRoom import CusBookRoom
-# from Room_Details import RoomDetails
+#from Room_Details import RoomDetails
 
 class CustomerInterface:
     def __init__(self,root,username):
@@ -107,8 +107,8 @@ class CustomerInterface:
         CusBookRoom(self.root,self.username)
     
     def openRoomDetails(self):
-        pass
         #RoomDetails(self.root)
+        pass
 
     def signout(self):
         self.root.destroy()

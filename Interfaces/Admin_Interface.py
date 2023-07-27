@@ -76,7 +76,7 @@ class AdminInterface:
             cursorCus =connection1.cursor()
             data = "Customer_ID"
             goal = "Status"
-            constrain = "CheckedIN"
+            constrain = "CheckedIn"
             cursorCus.execute("select %s from Room_Details where %s=?" % (data, goal), (constrain,))
             valideData = cursorCus.fetchall()
             return len(valideData)
