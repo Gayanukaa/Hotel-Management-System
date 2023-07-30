@@ -1,7 +1,7 @@
-""" import tkinter as tk
+import tkinter as tk
 from tkinter import *
 from tkinter import ttk
-from PIL import ImageTk, Image
+#from PIL import ImageTk, Image
 from Classes.CenterFunction import center
 from Classes.Rooms import Rooms
 
@@ -19,14 +19,13 @@ class RoomDetails:
         #self.root.iconbitmap("Images/hnet.com-image.ico")  #For MacOS
         #self.root.iconphoto(False, PhotoImage(file = "Images/hnet.com-image.png")) #For Windows
 
-
         # Create frames
-        frame1 = ttk.Frame(self.root, width=1000, height=150)
-        frame2 = ttk.Frame(self.root, width=1000, height=150)
-        frame3 = ttk.Frame(self.root, width=1000, height=150)
-        frame4 = ttk.Frame(self.root, width=1000, height=150)
-        frame5 = ttk.Frame(self.root, width=1000, height=150)
-        frame6 = ttk.Frame(self.root, width=1000, height=150)
+        frame1 = ttk.Frame(self.root, width=1000, height=150, bg="grey")
+        frame2 = ttk.Frame(self.root, width=1000, height=150, bg="grey")
+        frame3 = ttk.Frame(self.root, width=1000, height=150, bg="grey")
+        frame4 = ttk.Frame(self.root, width=1000, height=150, bg="grey")
+        frame5 = ttk.Frame(self.root, width=1000, height=150, bg="grey")
+        frame6 = ttk.Frame(self.root, width=1000, height=150, bg="grey")
 
         # Add frames to main window
         frame1.pack(side="top", fill="both", expand=True)
@@ -42,7 +41,7 @@ class RoomDetails:
         text2 = Text(frame2, height=10, width=50)
         text2.pack(side="left", fill="both", expand=True)
         text3 = Text(frame3, height=10, width=50)
-        text3.pack(side="left", fill="both", expand="both", expand=True)
+        text3.pack(side="left", fill="both", expand=True)
         text4 = Text(frame4, height=10, width=50)
         text4.pack(side="left", fill="both", expand=True)
         text5 = Text(frame5, height=10, width=50)
@@ -51,37 +50,30 @@ class RoomDetails:
         text6.pack(side="left", fill="both", expand=True)
         
         # Add image to frame 1
-        image1 = Image.open("image1.jpg")
-        photo1 = ImageTk.PhotoImage(image1)
-        label1 = tk.Label(frame1, image=photo1)
-        label1.image = photo1
+        singleRoom = PhotoImage(file="Images/Rooms/Single_Room_1.png",height=200,width=200)
+        label1 = tk.Label(frame1, image=singleRoom)
         label1.pack(side="right", fill="both", expand=True)
+        #label1.pack(side="right", fill="both", expand=Trues)
         # Add image to frame 2
-        image2 = Image.open("image2.jpg")
-        photo2 = ImageTk.PhotoImage(image2)
-        label2 = tk.Label(frame2, image=photo2)
-        label2.image = photo2
-        label2.pack(side="right", fill="both", expand=True)
+        doubleRoom = PhotoImage(file="Images/Rooms/Double_Room_1.png")
+        label2 = tk.Label(frame2, image=doubleRoom)
+        label2.pack(side="right", fill="both", expand= 10)
         # Add image to frame 3
-        image3 = Image.open("image3.jpg")
-        photo3 = ImageTk.PhotoImage(image3)
-        label3 = tk.Label(frame3, image=photo3)
-        label3.image = photo3
+        tripleRoom = PhotoImage(file="Images/Rooms/Triple_Room_1.png",height=200,width=200)
+        label3 = tk.Label(frame3, image=tripleRoom)
         label3.pack(side="right", fill="both", expand=True)
         # Add image to frame 4
-        image4 = Image.open("image4.jpg")
-        photo4 = ImageTk.PhotoImage(image4)
-        label4 = tk.Label(frame4, image=photo4)
-        label4.image = photo4
+        quadRoom = PhotoImage(file="Images/Rooms/Quad_Room_1.png")
+        label4 = tk.Label(frame4, image=quadRoom)
         label4.pack(side="right", fill="both", expand=True)
         # Add image to frame 5
-        image5 = Image.open("image5.jpg")
-        photo5 = ImageTk.PhotoImage(image5)
-        label5 = tk.Label(frame5, image=photo5)
+        queenRoom = PhotoImage(file="Images/Rooms/Queen_Room_1.png",height=200,width=200)
+        label5 = tk.Label(frame5, image=queenRoom)
+        label5.pack(side="right", fill="both", expand=True)
 
-
+        self.root.mainloop()
         
-
+    """
         self.currentPage = 1
         self.showPage(0)
 
@@ -138,4 +130,4 @@ class RoomDetails:
 
         else:
             print("Error")
- """
+    """
