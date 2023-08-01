@@ -33,8 +33,7 @@ class RoomDetails:
         Button(buttonFrame,text="Twin Room",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold")).pack(padx = 10, pady= 17)
 
         self.singleFrame = Frame(self.root,width=770, height=500)
-        self.singleFrame.pack(padx=210,pady=80)
-        #self.singleFrame.place(x=210, y=80)
+        self.singleFrame.place(x=210, y=80)
         
         singleRoom = PhotoImage(file="Images/Rooms/Single_Room_1.png",height=400,width=600)
         Label(self.singleFrame, image=singleRoom).place(x=0, y=0)
@@ -51,14 +50,13 @@ class RoomDetails:
         Label(self.singleFrame, text="Room Description: ", font=("times new roman",15, "bold")).place(x=430,y=280)
         Label(self.singleFrame, text="This room is a single room with a single bed.\nIt has a city view and is 20m2 in size.", font=("times new roman",15, "bold")).place(x=440,y=320)
         
-        Button(self.singleFrame,text="Book Now",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=None).place(x=350,y=450)
-        
-        #self.singleFrame.pack_forget()      
+        Button(self.singleFrame,text="Book Now",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.destroy).place(x=350,y=450)
         
         
         self.root.mainloop()
         
-        
+    def destroy(self):
+        self.singleFrame.destroy()
         
     """
         self.currentPage = 1
