@@ -24,7 +24,7 @@ class RoomDetails:
         buttonFrame = Frame(self.root)
         buttonFrame.place(x=40, y=100, width=140, height=470)
         
-        Button(buttonFrame,text="Single Room",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=None).pack(padx = 10, pady= 17)
+        Button(buttonFrame,text="Single Room",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.showSingle).pack(padx = 10, pady= 17)
         Button(buttonFrame,text="Double Room",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=None).pack(padx = 10, pady= 17)
         Button(buttonFrame,text="Triple Room",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold")).pack(padx = 10, pady=17)
         Button(buttonFrame,text="Quad Room",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=None).pack(padx = 10, pady= 17)
@@ -35,24 +35,24 @@ class RoomDetails:
         self.singleFrame = Frame(self.root,width=770, height=500)
         self.singleFrame.place(x=210, y=80)
         
-        singleRoom = PhotoImage(file="Images/Rooms/Single_Room_1.png",height=400,width=600)
-        Label(self.singleFrame, image=singleRoom).place(x=0, y=0)
+        self.singleRoom = PhotoImage(file="Images/Rooms/Single_Room_1.png",height=400,width=600)
+        Label(self.singleFrame, image=self.singleRoom).place(x=0, y=0)
         
         #text description about single room
         Label(self.singleFrame, text="Single Room", font=("times new roman",20, "bold")).place(x=540,y=20)
         
-        dimensionFrame = Frame(self.singleFrame,width=150,height=55)
-        dimensionFrame.place(x=420,y=80)
-        dimension = PhotoImage(file="Images/Icons/dimensions_icon.png")
-        Label(dimensionFrame, image=dimension).place(x=0, y=0)        
-        Label(dimensionFrame, text="Room Size: 20m2", font=("times new roman",15, "bold"),fg="black").place(x=55,y=2)
+        self.dimensionFrame = Frame(self.singleFrame,width=150,height=55)
+        self.dimensionFrame.place(x=420,y=80)
+        self.dimension = PhotoImage(file="Images/Icons/dimensions_icon.png")
+        Label(self.dimensionFrame, image=self.dimension).place(x=0, y=0)        
+        Label(self.dimensionFrame, text="Room Size: 20m2", font=("times new roman",15, "bold"),fg="black").place(x=55,y=2)
         
         #wifiFrame
-        wifiFrame = Frame(self.singleFrame,width=150,height=55)
-        wifiFrame.place(x=610,y=80)  
-        wifi = PhotoImage(file="Images/Icons/hotel_wifi_icon.png")
-        Label(wifiFrame, image=wifi).place(x=0, y=0)   
-        Label(wifiFrame, text="Wifi: Yes", font=("times new roman",15, "bold"),fg="black").place(x=55,y=2)
+        self.wifiFrame = Frame(self.singleFrame,width=150,height=55)
+        self.wifiFrame.place(x=610,y=80)  
+        self.wifi = PhotoImage(file="Images/Icons/hotel_wifi_icon.png")
+        Label(self.wifiFrame, image=self.wifi).place(x=0, y=0)   
+        Label(self.wifiFrame, text="Wifi: Yes", font=("times new roman",15, "bold"),fg="black").place(x=55,y=2)
                 
         Label(self.singleFrame, text="Bed Size: 1 Single Bed", font=("times new roman",15, "bold")).place(x=420,y=160)
         Label(self.singleFrame, text="Max People: 1", font=("times new roman",15, "bold")).place(x=420,y=200)
@@ -62,69 +62,76 @@ class RoomDetails:
         Label(self.singleFrame, text="This room is a single room with a single bed.", font=("times new roman",15, "bold")).place(x=440,y=355)
         Label(self.singleFrame, text="It has a city view and is 20m2 in size.", font=("times new roman",15, "bold")).place(x=440,y=375)
         
-        Button(self.singleFrame,text="Book Now",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.destroy).place(x=350,y=450)
-
+        Button(self.singleFrame,text="Book Now",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.destroySingle).place(x=350,y=450)
         
         self.root.mainloop()
         
-    def destroy(self):
+    def showSingle(self):
+        self.singleFrame = Frame(self.root,width=770, height=500)
+        self.singleFrame.place(x=210, y=80)
+        
+        self.singleRoom = PhotoImage(file="Images/Rooms/Single_Room_1.png",height=400,width=600)
+        Label(self.singleFrame, image=self.singleRoom).place(x=0, y=0)
+        
+        #text description about single room
+        Label(self.singleFrame, text="Single Room", font=("times new roman",20, "bold")).place(x=540,y=20)
+        
+        self.dimensionFrame = Frame(self.singleFrame,width=150,height=55)
+        self.dimensionFrame.place(x=420,y=80)
+        self.dimension = PhotoImage(file="Images/Icons/dimensions_icon.png")
+        Label(self.dimensionFrame, image=self.dimension).place(x=0, y=0)        
+        Label(self.dimensionFrame, text="Room Size: 20m2", font=("times new roman",15, "bold"),fg="black").place(x=55,y=2)
+        
+        #wifiFrame
+        self.wifiFrame = Frame(self.singleFrame,width=150,height=55)
+        self.wifiFrame.place(x=610,y=80)  
+        self.wifi = PhotoImage(file="Images/Icons/hotel_wifi_icon.png")
+        Label(self.wifiFrame, image=self.wifi).place(x=0, y=0)   
+        Label(self.wifiFrame, text="Wifi: Yes", font=("times new roman",15, "bold"),fg="black").place(x=55,y=2)
+                
+        Label(self.singleFrame, text="Bed Size: 1 Single Bed", font=("times new roman",15, "bold")).place(x=420,y=160)
+        Label(self.singleFrame, text="Max People: 1", font=("times new roman",15, "bold")).place(x=420,y=200)
+        Label(self.singleFrame, text="Room View: City View", font=("times new roman",15, "bold")).place(x=420,y=240)
+        Label(self.singleFrame, text="Room Price: $100", font=("times new roman",15, "bold")).place(x=420,y=280)
+        Label(self.singleFrame, text="Room Description: ", font=("times new roman",15, "bold")).place(x=420,y=330)
+        Label(self.singleFrame, text="This room is a single room with a single bed.", font=("times new roman",15, "bold")).place(x=440,y=355)
+        Label(self.singleFrame, text="It has a city view and is 20m2 in size.", font=("times new roman",15, "bold")).place(x=440,y=375)
+        
+        Button(self.singleFrame,text="Book Now",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.destroySingle).place(x=350,y=450)
+        
+    # def showDouble(self):
+    #     self.singleFrame = Frame(self.root,width=770, height=500)
+    #     self.singleFrame.place(x=210, y=80)
+        
+    #     self.singleRoom = PhotoImage(file="Images/Rooms/Single_Room_1.png",height=400,width=600)
+    #     Label(self.singleFrame, image=self.singleRoom).place(x=0, y=0)
+        
+    #     #text description about single room
+    #     Label(self.singleFrame, text="Single Room", font=("times new roman",20, "bold")).place(x=540,y=20)
+        
+    #     self.dimensionFrame = Frame(self.singleFrame,width=150,height=55)
+    #     self.dimensionFrame.place(x=420,y=80)
+    #     self.dimension = PhotoImage(file="Images/Icons/dimensions_icon.png")
+    #     Label(self.dimensionFrame, image=self.dimension).place(x=0, y=0)        
+    #     Label(self.dimensionFrame, text="Room Size: 20m2", font=("times new roman",15, "bold"),fg="black").place(x=55,y=2)
+        
+    #     #wifiFrame
+    #     self.wifiFrame = Frame(self.singleFrame,width=150,height=55)
+    #     self.wifiFrame.place(x=610,y=80)  
+    #     self.wifi = PhotoImage(file="Images/Icons/hotel_wifi_icon.png")
+    #     Label(self.wifiFrame, image=self.wifi).place(x=0, y=0)   
+    #     Label(self.wifiFrame, text="Wifi: Yes", font=("times new roman",15, "bold"),fg="black").place(x=55,y=2)
+                
+    #     Label(self.singleFrame, text="Bed Size: 1 Single Bed", font=("times new roman",15, "bold")).place(x=420,y=160)
+    #     Label(self.singleFrame, text="Max People: 1", font=("times new roman",15, "bold")).place(x=420,y=200)
+    #     Label(self.singleFrame, text="Room View: City View", font=("times new roman",15, "bold")).place(x=420,y=240)
+    #     Label(self.singleFrame, text="Room Price: $100", font=("times new roman",15, "bold")).place(x=420,y=280)
+    #     Label(self.singleFrame, text="Room Description: ", font=("times new roman",15, "bold")).place(x=420,y=330)
+    #     Label(self.singleFrame, text="This room is a single room with a single bed.", font=("times new roman",15, "bold")).place(x=440,y=355)
+    #     Label(self.singleFrame, text="It has a city view and is 20m2 in size.", font=("times new roman",15, "bold")).place(x=440,y=375)
+        
+    #     Button(self.singleFrame,text="Book Now",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.destroy).place(x=350,y=450)
+          
+    def destroySingle(self):
         self.singleFrame.destroy()
         
-    """
-        self.currentPage = 1
-        self.showPage(0)
-
-        leftBtn = Button(self.root,text="<",borderwidth=3,font=("times new roman",15,"bold"),command=self.showPage(-1))
-        leftBtn.place(x = 420, y= 550)
-
-        rightBtn = Button(self.root,text=">",borderwidth=3,font=("times new roman",15,"bold"),command=self.showPage(1))
-        rightBtn.place(x = 520, y= 550)
-
-        self.root.mainloop()
-    
-    def showPage(self, n):
-        self.currentPage += n
-
-        if(self.currentPage == 1):
-            frame1 = Frame(self.root,bg="grey",width=1000,height=500)
-            frame1.pack()
-
-            singleRoom = PhotoImage(file="Images/Rooms/Single_Room_1.png",height=200,width=200)
-            Label(frame1, image=singleRoom).place(x=0,y=50)
-            
-            doubleRoom = PhotoImage(file="Images/Rooms/Double_Room_1.png")
-            Label(frame1, image=doubleRoom).place(x=500,y=50)
-        
-        elif(self.currentPage == 2):
-            frame2 = Frame(self.root,bg="grey",width=1000,height=500)
-            frame2.pack()
-
-            tripleRoom = PhotoImage(file="Images/Rooms/Triple_Room_1.png",height=200,width=200)
-            Label(frame2, image=tripleRoom).place(x=0,y=50)
-            
-            quadRoom = PhotoImage(file="Images/Rooms/Quad_Room_1.png")
-            Label(frame2, image=quadRoom).place(x=500,y=50)
-        
-        elif(self.currentPage == 3):
-            frame3 = Frame(self.root,bg="grey",width=1000,height=500)
-            frame3.pack()
-
-            queenRoom = PhotoImage(file="Images/Rooms/Queen_Room_1.png",height=200,width=200)
-            Label(frame3, image=queenRoom).place(x=0,y=50)
-            
-            kingRoom = PhotoImage(file="Images/Rooms/King_Room_1.png")
-            Label(frame3, image=kingRoom).place(x=500,y=50)
-        
-        elif(self.currentPage == 4):
-            frame4 = Frame(self.root,bg="grey",width=1000,height=500)
-            frame4.pack()
-
-            suiteRoom = PhotoImage(file="Images/Rooms/Suite_Room_1.png",height=200,width=200)
-            Label(frame4, image=suiteRoom).place(x=0,y=50)
-            
-            twinRoom = PhotoImage(file="Images/Rooms/Twin_Room_1.png")
-            Label(frame4, image=twinRoom).place(x=500,y=50)
-
-        else:
-            print("Error")
-    """
