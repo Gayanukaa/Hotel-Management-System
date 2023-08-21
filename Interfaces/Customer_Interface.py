@@ -8,6 +8,7 @@ from Classes.Customer import Customer
 from Customer_Profile import CustomerProfile
 from Customer_BookRoom import CusBookRoom
 from Room_Details import RoomDetails
+from Customer_Booking_Details import CusBookDetails
 
 class CustomerInterface:
     def __init__(self,root,username):
@@ -40,7 +41,7 @@ class CustomerInterface:
 
         Button(frame1,text="Profile",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openCusProfile).pack(padx = 10, pady= 20)
         Button(frame1,text="Book a Room",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openRoomBooking).pack(padx = 10, pady= 10)
-        Button(frame1,text="Booking Details",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold")).pack(padx = 10, pady= 10)
+        Button(frame1,text="Booking Details",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openBookingDetails).pack(padx = 10, pady= 10)
         Button(frame1,text="Room Details",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openRoomDetails).pack(padx = 10, pady= 10)
         Button(frame1,text="Policies",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold")).pack(padx = 10, pady= 10)
         Button(frame1,text="Sign Out",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.signout).pack(padx = 10, pady= 10)
@@ -108,7 +109,9 @@ class CustomerInterface:
     
     def openRoomDetails(self):
         RoomDetails(self.root)
-        #pass
+    
+    def openBookingDetails(self):
+        CusBookDetails(self.root)
 
     def signout(self):
         self.root.destroy()
