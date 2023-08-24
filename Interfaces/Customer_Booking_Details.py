@@ -14,11 +14,11 @@ class CusBookDetails:
         self.root.resizable(False, False)
         center(self.root,1000,600)
         
-        img =  PhotoImage(file="Images/Backgrounds/Gradient_background_10.png")
-        Label(self.root, image=img).place(x=0, y=0,relwidth=1,relheight=1)
+        # img =  PhotoImage(file="Images/Backgrounds/Gradient_background_10.png")
+        # Label(self.root, image=img).place(x=0, y=0,relwidth=1,relheight=1)
 
-        #self.root.iconbitmap("Images/hnet.com-image.ico")  #For MacOS
-        #self.root.iconphoto(False, PhotoImage(file = "Images/hnet.com-image.png")) #For Windows
+        # self.root.iconbitmap("Images/hnet.com-image.ico")  #For MacOS
+        # self.root.iconphoto(False, PhotoImage(file = "Images/hnet.com-image.png")) #For Windows
     
         Label(self.root,text="Booking Details",font=("times new roman",50,"bold")).place(x=350,y=20)
 
@@ -64,8 +64,8 @@ class CusBookDetails:
         Label(frame2,text="6<Age<=12 : Adult charge/2",font=("times new roman",15,"bold")).place(x=30,y=65)
         Label(frame2,text="Age>12 : Adult charge",font=("times new roman",15,"bold")).place(x=30,y=85)
         
-        """Customer shouldn’t allow to cancel a book"""
-        Label(self.root,text="Customer are not allowed to cancel a booking",font=("times new roman",20,"bold")).place(x=50,y=500)
+        """Customer shouldn't allow to cancel a book"""
+        Label(self.root,text="Customer are not allowed to cancel a booking",font=("times new roman",20,"bold")).place(x=60,y=500)
 
         
         self.root.mainloop()
