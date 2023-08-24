@@ -5,6 +5,8 @@ from Classes.CenterFunction import center
 from Admin_CusUpdate import AdminCusUpdate
 from Admin_RoomUpdate import AdminRoomUpdate
 from Classes.Admin import Admin
+from Classes.Customer import Customer
+from Classes.Rooms import Rooms
 
 class AdminInterface:
     def __init__(self,root,username):
@@ -45,9 +47,10 @@ class AdminInterface:
 
         temp1 = self.getAvailableRooms()
         textAvRooms = "Rooms Available: \n(" + str(temp1) + ")"
-        temp2 = self.getNoofCustomers()
+        temp2 = Customer.getNoofCustomers()
         textNofCus  = "No. of Customers: \n(" + str(temp2) + ")"
-        textTdChkIn = "Today's Check In: \n(" + str(temp2) + ")"
+        temp3 = Rooms.getCheckIn()
+        textTdChkIn = "Today's Check In: \n(" + str(temp3) + ")"
         Label(self.root,text=textAvRooms).place(x=400,y=150)
         Label(self.root,text=textTdChkIn).place(x=550,y=150)
         Label(self.root,text=textNofCus).place(x=700,y=150)
@@ -69,19 +72,6 @@ class AdminInterface:
         cursorRm.execute("select %s from Room_Details where %s=?" % (data, goal), (constrain,))
         valideData = cursorRm.fetchall()
         return len(valideData)
-    
-    def getNoofCustomers(self):
-        try:
-            connection1 = sqlite3.connect("Databases/Hotel_Database.db")
-            cursorCus =connection1.cursor()
-            data = "Customer_ID"
-            goal = "Status"
-            constrain = "CheckedIn"
-            cursorCus.execute("select %s from Room_Details where %s=?" % (data, goal), (constrain,))
-            valideData = cursorCus.fetchall()
-            return len(valideData)
-        except sqlite3.Error as error:
-            return 0
     
     def openAdmUpdateCusWindow(self):
         AdminCusUpdate(self.root)

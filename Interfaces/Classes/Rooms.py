@@ -65,6 +65,19 @@ class Rooms:
             msg = "Details Already Exist"
             messagebox.showinfo('message', msg)
             return False
+        
+    def getCheckIn():
+        try:
+            connection1 = sqlite3.connect("Databases/Hotel_Database.db")
+            cursorCus =connection1.cursor()
+            data = "Customer_ID"
+            goal = "Status"
+            constrain = "CheckedIn"
+            cursorCus.execute("select %s from Customer_Data where %s=?" % (data, goal), (constrain,))
+            valideData = cursorCus.fetchall()
+            return len(valideData)
+        except sqlite3.Error as error:
+            return error
 
     def getData(entered):
         try:

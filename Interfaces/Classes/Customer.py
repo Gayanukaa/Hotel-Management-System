@@ -87,12 +87,19 @@ class Customer:
             cursorCus =connection1.cursor()
             data = "Customer_ID"
             goal = "Status"
-            constrain = "CheckedIN"
-            cursorCus.execute("select %s from Room_Details where %s=?" % (data, goal), (constrain,))
-            valideData = cursorCus.fetchall()
-            return len(valideData)
+            constrain = "CheckedIn"
+            cursorCus.execute("select %s from Customer_Data where %s=?" % (data, goal), (constrain,))
+            valideData1 = cursorCus.fetchall()
+            
+            data = "Customer_ID"
+            goal = "Status"
+            constrain = "Booked"
+            cursorCus.execute("select %s from Customer_Data where %s=?" % (data, goal), (constrain,))
+            valideData2 = cursorCus.fetchall()
+            
+            return (len(valideData1) + len(valideData2))
         except sqlite3.Error as error:
-            msg = 0
+            msg = error
             return msg
 
     def getData(option,entered):
