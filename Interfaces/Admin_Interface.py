@@ -7,6 +7,7 @@ from Admin_RoomUpdate import AdminRoomUpdate
 from Classes.Admin import Admin
 from Classes.Customer import Customer
 from Classes.Rooms import Rooms
+from Admin_CheckIn import AdminCheckIn
 
 class AdminInterface:
     def __init__(self,root,username):
@@ -38,7 +39,7 @@ class AdminInterface:
         frame1.place(x=70, y=140, width=200, height=400)
 
         Button(frame1,text="Customer",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openAdmUpdateCusWindow).pack(padx = 10, pady= 20)
-        Button(frame1,text="Check In",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold")).pack(padx = 10, pady= 10)
+        Button(frame1,text="Check In",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openAdminCheckInWindow).pack(padx = 10, pady= 10)
         Button(frame1,text="Check Out",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold")).pack(padx = 10, pady= 10)
         Button(frame1,text="Rooms",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openAdmRoomUpdateWindow).pack(padx = 10, pady= 10)
         Button(frame1,text="Reports",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold")).pack(padx = 10, pady= 10)
@@ -54,15 +55,15 @@ class AdminInterface:
         Label(self.root,text=textAvRooms).place(x=400,y=150)
         Label(self.root,text=textTdChkIn).place(x=550,y=150)
         Label(self.root,text=textNofCus).place(x=700,y=150)
-        
+
         self.root.mainloop()
-    
+
     def openAdmRoomUpdateWindow(self):
         AdminRoomUpdate(self.root)
 
     def signout(self):
         self.root.destroy()
-    
+
     def getAvailableRooms(self):
         connection2 = sqlite3.connect("Databases/Hotel_Database.db")
         cursorRm =connection2.cursor()
@@ -72,7 +73,9 @@ class AdminInterface:
         cursorRm.execute("select %s from Room_Details where %s=?" % (data, goal), (constrain,))
         valideData = cursorRm.fetchall()
         return len(valideData)
-    
+
     def openAdmUpdateCusWindow(self):
         AdminCusUpdate(self.root)
 
+    def openAdminCheckInWindow(self):
+        AdminCheckIn(self.root)

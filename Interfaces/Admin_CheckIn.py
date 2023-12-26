@@ -33,10 +33,10 @@ class AdminCheckIn:
         Label(self.root,text ="Check-In Details",font=('calibre',25,'normal')).place(x=400,y=30)
 
         frame = Frame(self.root)
-        frame.place(x=270, y=80, width=450, height=50)
+        frame.place(x=270, y=80, width=450, height=45)
 
-        Label(frame,text ="Booking_ID",font=('calibre',10,'normal')).place(x=30,y=10)
-        Entry(frame,textvariable = self.dataEntered, font=('calibre',10,'normal')).place(x=160, y=10)
+        Label(frame,text ="Booking_ID",font=('calibre',15,'normal')).place(x=30,y=9)
+        Entry(frame,textvariable = self.dataEntered, font=('calibre',10,'normal')).place(x=160, y=12)
         Button(frame,text="Search",relief=RAISED,command=self.loadCheckInDetails).place(x=350,y=8)
 
         frame1 = Frame(self.root,bg="grey")
@@ -52,7 +52,7 @@ class AdminCheckIn:
         Label(frame1,text ="Contact No.").place(x=20,y=70)
         Entry(frame1,textvariable = self.cuscontactNo, font=('calibre',10,'normal'),state='disabled').place(x=140,y=70)
         Label(frame1,text ="Check OUT").place(x=320,y=70)
-        Entry(frame1,textvariable = self.checkOut, font=('calibre',10,'normal'),state='disabled').place(x=400,y=20)
+        Entry(frame1,textvariable = self.checkOut, font=('calibre',10,'normal'),state='disabled').place(x=400,y=70)
         Label(frame1,text ="No. of Childs").place(x=600,y=70)
         Entry(frame1,textvariable = self.noOfChildren, font=('calibre',10,'normal'),state='disabled').place(x=700, y=70)
 
@@ -60,14 +60,14 @@ class AdminCheckIn:
         Entry(frame1,textvariable = self.mealPlan, font=('calibre',10,'normal'),state='disabled').place(x=140,y=120)
 
         frame2 = Frame(self.root,bg="black")
-        frame2.place(x=50, y=330, width=400, height=40)
+        frame2.place(x=50, y=350, width=400, height=40)
 
         Label(frame2,text ="Room ID",fg="white").place(x=20,y=10)
-        Entry(frame2, font=('calibre',10,'normal'),state='disabled').place(x=100, y=10)
+        Entry(frame2, font=('calibre',10,'normal'),state='disabled').place(x=140, y=10)
         Button(frame2,text="Search",relief=RAISED).place(x=300,y=7)
 
         frame3 = Frame(self.root,bg="grey")
-        frame3.place(x=50, y=420, width=900, height=100)
+        frame3.place(x=50, y=410, width=900, height=100)
 
         Label(frame3,text ="Price for One").place(x=20,y=20)
         Entry(frame3,textvariable = self.priceForOne, font=('calibre',10,'normal'),state="disabled").place(x=140, y=20)
@@ -81,9 +81,9 @@ class AdminCheckIn:
         Label(frame3,text ="Balance").place(x=600,y=70)
         Entry(frame3,textvariable = self.balance, font=('calibre',10,'normal'),state="disabled").place(x=700, y=70)
 
-        Button(self.root,text="CheckIn",relief=RAISED).place(x=350,y=560)
-        Button(self.root,text="Update",relief=RAISED).place(x=470,y=560)
-        Button(self.root,text="Clear",relief=RAISED).place(x=570,y=560)
+        Button(self.root,text="CheckIn",relief=RAISED).place(x=350,y=550)
+        Button(self.root,text="Update",relief=RAISED).place(x=470,y=550)
+        Button(self.root,text="Clear",relief=RAISED).place(x=570,y=550)
 
         self.root.mainloop()
 
@@ -106,7 +106,7 @@ class AdminCheckIn:
             self.advance.set(data[0][12])
             self.mealPlan.set(data[0][14])
             self.priceForOne.set(data[0][9])
-            self.balance.set(float(self.total.get()) - float(self.advance.get()))
+            self.balance.set(round(float(self.total.get()) - float(self.advance.get()),2))
 
         else:
             messagebox.showerror("Error","Please enter data to search")

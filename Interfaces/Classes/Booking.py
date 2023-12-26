@@ -46,16 +46,16 @@ class Booking:
             return False
         else:
             return True
-    
+
     def findRoom(checkIn,checkOut,noOfAdults,noOfChildren,mealPlan,childAges):
         # 0<=Age<=6 : No charge
-        # 6<Age<=12 : Adult charge/2 
+        # 6<Age<=12 : Adult charge/2
         # Age>12 : Adult
 
         # Adult rate =room charge /no of persons
         # Total=(Adult rate + meal) * (No of Adult)+ (Adult Rate + meal)/2 * (No of child)+ Additional charge
         # Total bill amount = Total*Discount
-        
+
         roomList=[]
 
         noOfChildren = 0 if noOfChildren == '' else int(noOfChildren)
@@ -88,7 +88,7 @@ class Booking:
             childRate.append(0)
 
         childPrices = sum(x for x in childRate if isinstance(x, float))
-        
+
         # Meal Plan
         connection2 = sqlite3.connect("Databases/Hotel_Database.db")
         cursorBk =connection2.cursor()
@@ -105,7 +105,7 @@ class Booking:
 
         if(total<price):
             total = price*int(mealRate)
-        
+
         # Total bill amount = Total*Discount
         # Discounts to be implemented
 
@@ -122,7 +122,7 @@ class Booking:
         advance = 0.4*total
 
         return [roomType,price,int(total),roomNos,int(advance)]
-    
+
     def createBooking(self,username,roomID,checkIn,checkOut,noOfAdults,noOfChildren,total,roomNo,advance,mealPlan):
         self.username = username
         option = "Username"
@@ -189,8 +189,25 @@ class Booking:
             status = False
 
         return status,msg
-    
-""" 
+
+    def getBookingDetails(option,entered):
+        try:
+            connection = sqlite3.connect("Databases/Hotel_Database.db")
+            cursor =connection.cursor()
+            cursor.execute("select * from Booking_Details where %s=?" % (option), (entered,))
+            valideData = cursor.fetchall()
+            connection.close()
+            return valideData
+        except sqlite3.Error as error:
+            msg = "Details entered not Exist"
+            messagebox.showinfo('message', msg)
+            return None
+        except IndexError as error:
+            msg = "Data not matching. Try Again"
+            messagebox.showinfo('message', msg)
+            return None
+
+"""
 connection3.commit() #Saving database
 connection3.close() #Closing datbase
  """

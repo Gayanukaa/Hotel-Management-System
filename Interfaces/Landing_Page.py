@@ -16,7 +16,7 @@ class Login:
 
         #self.root.iconbitmap("Images/hnet.com-image.ico")  #For MacOS
         #self.root.iconphoto(False, PhotoImage(file = "Images/hnet.com-image.png")) #For Windows
-        
+
         Label(self.root, text="Choose your Login", font=("times new roman",30, "bold")).place(x=500,y=100, anchor="center")
 
         frame1 = Frame(self.root,bg="white")
@@ -28,14 +28,14 @@ class Login:
         frame2.place(x=695, y=420, width=185, height=40)
         cusBtn = Button(frame2,text="Customer Login",borderwidth=5,font=("times new roman",20,"bold"),bg="red",fg="grey",command=self.customerLogin)
         cusBtn.pack()
-        
+
         self.root.mainloop()
-    
+
     def adminLogin(self):
         #self.root.destroy()
         #root = Tk()
         AdminLogin(self.root)
-    
+
     def customerLogin(self):
         #self.root.destroy()
         #root = Tk()
