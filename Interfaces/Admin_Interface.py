@@ -8,6 +8,7 @@ from Classes.Admin import Admin
 from Classes.Customer import Customer
 from Classes.Rooms import Rooms
 from Admin_CheckIn import AdminCheckIn
+from Admin_CheckOut import AdminCheckOut
 
 class AdminInterface:
     def __init__(self,root,username):
@@ -40,7 +41,7 @@ class AdminInterface:
 
         Button(frame1,text="Customer",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openAdmUpdateCusWindow).pack(padx = 10, pady= 20)
         Button(frame1,text="Check In",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openAdminCheckInWindow).pack(padx = 10, pady= 10)
-        Button(frame1,text="Check Out",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold")).pack(padx = 10, pady= 10)
+        Button(frame1,text="Check Out",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openAdminCheckOutWindow).pack(padx = 10, pady= 10)
         Button(frame1,text="Rooms",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openAdmRoomUpdateWindow).pack(padx = 10, pady= 10)
         Button(frame1,text="Reports",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold")).pack(padx = 10, pady= 10)
         Button(frame1,text="Profile",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold")).pack(padx = 10, pady= 10)
@@ -79,3 +80,6 @@ class AdminInterface:
 
     def openAdminCheckInWindow(self):
         AdminCheckIn(self.root)
+
+    def openAdminCheckOutWindow(self):
+        AdminCheckOut(self.root)

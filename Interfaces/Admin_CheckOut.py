@@ -1,3 +1,4 @@
+import datetime
 import sqlite3
 from tkinter import *
 from tkinter import messagebox
@@ -65,8 +66,8 @@ class AdminCheckOut:
         Entry(frame2,textvariable = self.balance, font=('calibre',10,'normal'),state="disabled").place(x=140, y=370)
 
         Button(self.root,text="Print",relief=RAISED,command=self.createPrintableForm).place(x=550,y=140)
-        Button(self.root,text="CheckOut",relief=RAISED,command=self.checkOutCustomer).place(x=700,y=140)
-        Button(self.root,text="Clear",relief=RAISED,command=self.clearWindow).place(x=700,y=850)
+        Button(self.root,text="CheckOut",relief=RAISED,command=self.checkOutCustomer).place(x=680,y=140)
+        Button(self.root,text="Clear",relief=RAISED,command=self.clearWindow).place(x=820,y=140)
 
         frameP = Frame(self.root, bg="white", width=500, height=400)
         frameP.place(x=470, y=180)
@@ -74,7 +75,6 @@ class AdminCheckOut:
         self.root.mainloop()
 
     def loadCheckOutDetails(self):
-
         option = "Booking_ID"
         entered = self.dataEntered.get()
 
@@ -104,48 +104,58 @@ class AdminCheckOut:
         self.advance.set("")
         self.balance.set("")
 
-    def loadBookingDetails(self):
-        # Load booking details from database
-        # Replace the following code with your database query
-        self.name = "John Doe"
-        self.contactNo = "1234567890"
-        self.checkInDate = "2022-01-01"
-        self.checkOutDate = "2022-01-05"
-        self.noOfAdults = 2
-        self.noOfChilds = 1
-        self.priceForOne = 100
-        self.roomNo = "101"
-        self.discount = 10
-        self.advance = 200
-        self.total = 900
-        self.checkIn = True
-        self.roomID = "R001"
-        self.mealPlanDrop = "Breakfast"
-        self.additionalPrice = 50
-        self.balance = 700
-
-        frameP = Frame(self.root, bg="white", width=500, height=400)
-        frameP.place(x=470, y=180)
-
     def createPrintableForm(self):
-        frameP = Frame(self.root, bg="white", width=500, height=400)
-        frameP.place(x=470, y=180)
+        try:
+            connection2 = sqlite3.connect("Databases/Hotel_Database.db")
+            cursorRm =connection2.cursor()
+            data = "Status"
+            goal = "RoomNo"
+            constrain = self.roomNo.get()
+            cursorRm.execute("select %s from Room_Details where %s=?" % (data, goal), (constrain,))
+            valideData = cursorRm.fetchall()
+            status = valideData[0][0]
 
-        self.img1 = PhotoImage(file="Images/Icons/hotel_logo.png")
-        Label(frameP, image=self.img1, bg="white").place(x=0, y=0)
+            if(status == "CheckedIn"):
+                frameP = Frame(self.root, bg="white", width=500, height=400)
+                frameP.place(x=470, y=180)
 
-        Label(frameP, text="Loren Impsum Hotel", bg="white", fg="black", borderwidth=2, relief="solid",font=('calibre',20,'normal')).place(x=230, y=10)
-        Label(frameP, text="Address: Perera Road, Nowhereville\nContactNo: 011 911 9119", bg="white", fg="black", borderwidth=2, relief="solid",font=('calibre',15,'normal')).place(x=180, y=40)
+                self.img1 = PhotoImage(file="Images/Icons/hotel_logo.png")
+                Label(frameP, image=self.img1, bg="white").place(x=30, y=10)
 
-        Label(frameP, text="Issue Date: " + self.checkOut.get(), bg="white", fg="black", relief="solid",font=('calibre',15,'normal')).place(x=50, y=150)
+                Label(frameP, text="Loren Impsum Hotel", bg="white", fg="black", borderwidth=2, relief="solid",font=('calibre',20,'normal')).place(x=210, y=20)
+                Label(frameP, text="Address: Perera Road, Nowhereville\nContactNo: 011 911 9119", bg="white", fg="black", borderwidth=2, relief="solid",font=('calibre',15,'normal')).place(x=170, y=52)
 
-        Label(frameP, text="Customer Details", bg="white", fg="black", borderwidth=2, relief="solid",font=('calibre',15,'normal')).place(x=50, y=200)
-        Label(frameP, text="Name: " + self.cusname.get(), bg="white", fg="black", borderwidth=2, relief="solid",font=('calibre',15,'normal')).place(x=50, y=240)
-        Label(frameP, text="Contact No: " + self.contactNo.get(), bg="white", fg="black", borderwidth=2, relief="solid",font=('calibre',15,'normal')).place(x=50, y=280)
-        Label(frameP, text="Check In: " + self.checkIn.get(), bg="white", fg="black", borderwidth=2, relief="solid",font=('calibre',15,'normal')).place(x=50, y=320)
-        Label(frameP, text="Check Out: " + self.checkOut.get(), bg="white", fg="black", borderwidth=2, relief="solid",font=('calibre',15,'normal')).place(x=50, y=360)
+                Label(frameP, text="Issue Date: " + self.checkOut.get(), bg="white", fg="black", relief="solid",font=('calibre',15,'normal')).place(x=30, y=125)
+                Label(frameP, text="Customer Details", bg="white", fg="black", relief="solid",font=('calibre',15,'normal')).place(x=30, y=155)
 
-        Label(frameP, text="Total: " + self.total.get(), bg="white", fg="black", borderwidth=2, relief="solid",font=('calibre',15,'normal')).place(x=300, y=380)
+                framePinner = Frame(frameP, bg="white",highlightbackground="grey",highlightthickness=2,width=420, height=150)
+                framePinner.place(x=40, y=190)
+
+                Label(framePinner, text="Name: " + self.cusname.get(), bg="white", fg="black", borderwidth=2, relief="solid",font=('calibre',15,'normal')).place(x=20, y=20)
+                Label(framePinner, text="Contact No: " + self.contactNo.get(), bg="white", fg="black", borderwidth=2, relief="solid",font=('calibre',15,'normal')).place(x=220, y=20)
+                Label(framePinner, text="Check In: " + self.checkIn.get(), bg="white", fg="black", borderwidth=2, relief="solid",font=('calibre',15,'normal')).place(x=20, y=60)
+                Label(framePinner, text="Check Out: " + self.checkOut.get(), bg="white", fg="black", borderwidth=2, relief="solid",font=('calibre',15,'normal')).place(x=220, y=60)
+                Label(framePinner, text="Room No: " + self.roomNo.get(), bg="white", fg="black", borderwidth=2, relief="solid",font=('calibre',15,'normal')).place(x=20, y=100)
+
+                date1_str = str(self.checkIn.get())
+                date2_str = str(self.checkOut.get())
+                date1 = datetime.datetime.strptime(date1_str, "%m/%d/%y")
+                date2 = datetime.datetime.strptime(date2_str, "%m/%d/%y")
+
+                difference = date2 - date1
+                total_days = difference.days
+
+                Label(framePinner, text="No. of Days: " + str(total_days), bg="white", fg="black", relief="solid",font=('calibre',15,'normal')).place(x=220, y=100)
+
+                Label(frameP, text="Total: ", bg="grey", fg="red", relief="solid",font=('calibre',20,'normal')).place(x=50, y=360)
+                Label(frameP, text=self.total.get(), bg="grey", fg="black", relief="solid",font=('calibre',20,'normal')).place(x=350, y=360)
+            else:
+                frameP = Frame(self.root, bg="white", width=500, height=400)
+                frameP.place(x=470, y=180)
+        except sqlite3.Error as error:
+            print(error)
+        except IndexError as error:
+            print(error)
 
     def checkOutCustomer(self):
         try:
@@ -158,7 +168,7 @@ class AdminCheckOut:
             valideData = cursorRm.fetchall()
             status = valideData[0][0]
 
-            if(status == "CheckIn"):
+            if(status == "CheckedIn"):
                 sqln = """update Room_Details set Status = ? where RoomNo = ?"""
                 data = ["Available",self.roomNo.get()]
                 cursorRm.execute(sqln,data)
