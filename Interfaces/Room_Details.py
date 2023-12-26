@@ -18,12 +18,12 @@ class RoomDetails:
 
         #self.root.iconbitmap("Images/hnet.com-image.ico")  #For MacOs
         #self.root.iconphoto(False, PhotoImage(file = "Images/hnet.com-image.png")) #For Windows
-        
-        Label(self.root, text="Room Details", font=("times new roman",30, "bold")).place(x=500,y=50, anchor="center") 
-        
+
+        Label(self.root, text="Room Details", font=("times new roman",30, "bold")).place(x=500,y=70, anchor="center")
+
         buttonFrame = Frame(self.root)
         buttonFrame.place(x=40, y=100, width=140, height=480)
-        
+
         Button(buttonFrame,text="Single Room",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.showSingle).pack(padx = 10, pady= 14)
         Button(buttonFrame,text="Double Room",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.showDouble).pack(padx = 10, pady= 14)
         Button(buttonFrame,text="Triple Room",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.showTriple).pack(padx = 10, pady=14)
@@ -33,19 +33,16 @@ class RoomDetails:
         Button(buttonFrame,text="Twin Room",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.showTwin).pack(padx = 10, pady= 14)
         Button(buttonFrame,text="Suite",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.showSuite).pack(padx = 10, pady= 14)
 
-        self.roomFrame = Frame(self.root,width=770, height=500)
-        self.roomFrame.place(x=210, y=80)
-        
-        self.roomImage = PhotoImage(file="Images/Rooms/Single_Room_1.png",height=400,width=600)
-        Label(self.roomFrame, image=self.roomImage).place(x=0, y=0)
-        
+        self.roomFrame = Frame(self.root,width=770, height=400)
+        self.roomFrame.place(x=210, y=125)
+
         self.showSingle()
-        
-        self.root.mainloop() 
-    
+
+        self.root.mainloop()
+
     def showRoom(self, room_type, image_path, title, size, wifi, bed_size, max_people, room_view, room_price, room_description1,room_description2):
-        self.roomFrame = Frame(self.root, width=770, height=500)
-        self.roomFrame.place(x=210, y=80)
+        self.roomFrame = Frame(self.root, width=770, height=400)
+        self.roomFrame.place(x=210, y=125)
 
         self.roomImage = PhotoImage(file=image_path, height=400, width=600)
         Label(self.roomFrame, image=self.roomImage).place(x=0, y=0)
@@ -68,11 +65,9 @@ class RoomDetails:
         Label(self.roomFrame, text=f"Max People: {max_people}", font=("times new roman", 15, "bold")).place(x=420, y=200)
         Label(self.roomFrame, text=f"Room View: {room_view}", font=("times new roman", 15, "bold")).place(x=420, y=240)
         Label(self.roomFrame, text=f"Room Price: {room_price}", font=("times new roman", 15, "bold")).place(x=420, y=280)
-        Label(self.roomFrame, text="Room Description:", font=("times new roman", 15, "bold")).place(x=420, y=330)
-        Label(self.roomFrame, text=room_description1, font=("times new roman", 15, "bold")).place(x=440, y=355)
-        Label(self.roomFrame, text=room_description2, font=("times new roman",15, "bold")).place(x=440,y=375)
-
-        Button(self.roomFrame, text="Book Now", relief=RAISED, borderwidth=3, font=("times new roman", 15, "bold"), command=self.destroyFrame).place(x=350, y=450)
+        Label(self.roomFrame, text="Room Description:", font=("times new roman", 15, "bold")).place(x=420, y=320)
+        Label(self.roomFrame, text=room_description1, font=("times new roman", 15, "bold")).place(x=440, y=345)
+        Label(self.roomFrame, text=room_description2, font=("times new roman",15, "bold")).place(x=440,y=365)
 
     def showSingle(self):
         self.showRoom(
@@ -105,7 +100,7 @@ class RoomDetails:
         )
 
     # Repeat similar functions for other room types...
-    
+
     def showTriple(self):
         self.showRoom(
             room_type="Triple Room",
@@ -120,7 +115,7 @@ class RoomDetails:
             room_description1="This room is a triple room with a single beds.",
             room_description2="It has an amazing view and is 45m2 in size."
         )
-    
+
     #showQuad
     def showQuad(self):
         self.showRoom(
@@ -136,7 +131,7 @@ class RoomDetails:
             room_description1="This room is a quad room with double beds.",
             room_description2="It has an amazing view and is 70m2 in size."
         )
-        
+
     #showQueen
     def showQueen(self):
         self.showRoom(
@@ -152,7 +147,7 @@ class RoomDetails:
             room_description1="This room is a queen room with a queen bed.",
             room_description2="It has an amazing view and is 40m2 in size."
         )
-    
+
     #showKing
     def showKing(self):
         self.showRoom(
@@ -168,7 +163,7 @@ class RoomDetails:
             room_description1="This room is a king room with a king bed.",
             room_description2="It has an amazing view and is 40m2 in size."
         )
-    
+
     #showTwin
     def showTwin(self):
         self.showRoom(
@@ -184,7 +179,7 @@ class RoomDetails:
             room_description1="This room is a twin room with two twin beds.",
             room_description2="It has an amazing view and is 40m2 in size."
         )
-    
+
     #showSuite
     def showSuite(self):
         self.showRoom(
@@ -200,12 +195,12 @@ class RoomDetails:
             room_description1="This room is a suite room with two queen beds.",
             room_description2="It has an amazing view and is 70m2 in size."
         )
-                                           
+
     def destroyFrame(self):
         self.roomFrame.destroy()
-        
+
         self.stillFrame = Frame(self.root,width=770, height=500, bg="grey")
         self.stillFrame.place(x=210, y=80)
-        
+
         Label(self.stillFrame, text="Choose a Room", font=("times new roman",20, "bold")).place(x=340,y=240)
-        
+

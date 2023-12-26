@@ -6,7 +6,6 @@ import tkinter
 from Classes.CenterFunction import center
 from Customer_Interface import CustomerInterface
 from Customer_Signup import CustomerSignUp
-#cus - cus
 
 class CustomerLogin:
     def __init__(self,root):
@@ -51,18 +50,18 @@ class CustomerLogin:
         Button(self.root,text="Display Room Status",command=self.View).place(x=630,y=150)
 
         self.root.mainloop()
-    
+
     def View(self):
         connection = sqlite3.connect("Databases/Hotel_Database.db")
         cursor = connection.cursor()
         cursor.execute("SELECT Category,View,Floor,Status FROM Room_Details order by Floor")
-        rows = cursor.fetchall()    
+        rows = cursor.fetchall()
 
         for row in rows:
-            self.tree.insert("", tkinter.END, values=row)        
+            self.tree.insert("", tkinter.END, values=row)
 
         connection.close()
-    
+
     def logCustomerProcess(self):
         username = self.cusUsername.get()
         password = self.cusPassword.get()
@@ -98,7 +97,7 @@ class CustomerLogin:
             CustomerInterface(self.root,username)
         else:
             pass
-    
+
     def signupCustomerProcess(self):
         CustomerSignUp(self.root)
 
