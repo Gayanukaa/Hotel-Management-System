@@ -1,4 +1,5 @@
 from tkinter import *
+import sqlite3
 from tkinter import messagebox
 from Classes.CenterFunction import center
 from Classes.Booking import Booking
@@ -81,9 +82,9 @@ class AdminCheckIn:
         Label(frame3,text ="Balance").place(x=600,y=70)
         Entry(frame3,textvariable = self.balance, font=('calibre',10,'normal'),state="disabled").place(x=700, y=70)
 
-        Button(self.root,text="CheckIn",relief=RAISED).place(x=350,y=550)
+        Button(self.root,text="CheckIn",relief=RAISED,command=self.checkInCustomer).place(x=350,y=550)
         Button(self.root,text="Update",relief=RAISED).place(x=470,y=550)
-        Button(self.root,text="Clear",relief=RAISED).place(x=570,y=550)
+        Button(self.root,text="Clear",relief=RAISED,command=self.clearWindow).place(x=570,y=550)
 
         self.root.mainloop()
 
@@ -111,3 +112,60 @@ class AdminCheckIn:
         else:
             messagebox.showerror("Error","Please enter data to search")
 
+    def clearWindow(self):
+        self.dataEntered.set("")
+        self.bookingID.set("")
+        self.cusname.set("")
+        self.cuscontactNo.set("")
+        self.checkIn.set("XX.XX.XXXX")
+        self.checkOut.set("XX.XX.XXXX")
+        self.noOfAdults.set("")
+        self.noOfChildren.set("")
+        self.total.set("")
+        self.roomNo.set("")
+        self.advance.set("")
+        self.balance.set("")
+        self.mealPlan.set("")
+        self.priceForOne.set("")
+
+    def checkInCustomer(self):
+        print("Customer balance collected")
+        roomNO = self.roomNo.get()
+        try:
+            connection2 = sqlite3.connect("Databases/Hotel_Database.db")
+            cursorRm =connection2.cursor()
+            sqln = """update Room_Details set Status = ? where RoomNo = ?"""
+            data = ["CheckedIn",roomNO]
+            cursorRm.execute(sqln,data)
+            connection2.commit()
+            connection2.close()
+        except sqlite3.Error as error:
+            print(error)
+        except IndexError as error:
+            print(error)
+
+        try:
+            connection1 = sqlite3.connect("Databases/Hotel_Database.db")
+            cursorCus =connection1.cursor()
+            data = "Status"
+            goal = "Name"
+            constrain = self.cusname.get()
+            cursorCus.execute("select %s from Customer_Data where %s=?" % (data, goal), (constrain,))
+            valideData = cursorCus.fetchall()
+            status = valideData[0][0]
+
+            if(status == "Booked"):
+                sqln = """update Customer_Data set Status = ? where Name = ?"""
+                data = ["CheckedIn",self.cusname.get()]
+                cursorCus.execute(sqln,data)
+                connection1.commit()
+                connection1.close()
+                messagebox.showerror("Message","Customer Checked In")
+                self.root.destroy
+            else:
+                connection1.close()
+                messagebox.showerror("Error","Customer already Checked In")
+        except sqlite3.Error as error:
+            print(error)
+        except IndexError as error:
+            print(error)
