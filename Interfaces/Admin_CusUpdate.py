@@ -32,12 +32,12 @@ class AdminCusUpdate:
         self.clickedGen = StringVar()
 
         Label(self.root,text ="Customer Details",font=('calibre',20,'normal')).place(x=400,y=100)
-        
+
         frame1 = Frame(self.root)
         frame1.place(x=270, y=40, width=450, height=50)
 
         options = ["Customer_ID","Name","Title","Date_of_Birth","Gender","Contact_No","ID_No","Email","Nationality","Address"] # Dropdown menu options
-        self.clickedOption.set("Customer_ID") # initial menu text  
+        self.clickedOption.set("Customer_ID") # initial menu text
         OptionMenu(frame1,self.clickedOption ,*options ).place(x=30,y=10)
         Entry(frame1,textvariable = self.dataEntered, font=('calibre',10,'normal')).place(x=160, y=10)
         Button(frame1,text="Search",relief=RAISED,command=self.searchData).place(x=350,y=8)
@@ -47,20 +47,20 @@ class AdminCusUpdate:
 
         Label(frame2,text ="Title").place(x=30,y=20)
         titleOp = ["Mr.","Ms.","Mrs."] # Dropdown menu options
-        self.clickedTitle.set("") # initial menu text  
+        self.clickedTitle.set("") # initial menu text
         cusTitle = OptionMenu(frame2,self.clickedTitle ,*titleOp ).place(x=80,y=20)
         Label(frame2,text ="Name").place(x=280,y=20)
         cusName = Entry(frame2,textvariable = self.cusname, font=('calibre',10,'normal')).place(x=350,y=20)
         Label(frame2,text ="Contact No.").place(x=530,y=20)
         cusContNo = Entry(frame2,textvariable = self.cuscontactNo, font=('calibre',10,'normal')).place(x=620, y=20)
         self.cuscontactNo.set("0XXXXXXXXX")
-        
+
         Label(frame2,text ="D.O.B").place(x=30,y=120)
         cusDOB = Entry(frame2,textvariable = self.cusdob, font=('calibre',10,'normal')).place(x=80, y=120)
         self.cusdob.set("XX.XX.XXXX")
         Label(frame2,text ="Gender").place(x=280,y=120)
         genderOp = ["Male","Female","Prefer not to say"] # Dropdown menu options
-        self.clickedGen.set("") # initial menu text  
+        self.clickedGen.set("") # initial menu text
         cusGender = OptionMenu(frame2,self.clickedGen ,*genderOp ).place(x=420,y=120) # Create Dropdown menu
         Label(frame2,text ="ID No.").place(x=530,y=120)
         cusId = Entry(frame2,textvariable = self.cusidNo, font=('calibre',10,'normal')).place(x=605, y=120)
@@ -81,14 +81,14 @@ class AdminCusUpdate:
         Button(frame3,text="Clear",relief=RAISED,command=self.clearWindow).place(x=320,y=10)
 
         self.root.mainloop()
-    
+
     def searchData(self):
         option = self.clickedOption.get()
         entered = self.dataEntered.get()
 
         if(option != None or entered != None):
             data = Customer.getData(option,entered)
-            
+
             self.cuscustomerID.set(data[0][0])
             self.cusname.set(data[0][1])
             self.clickedTitle.set(data[0][2])
@@ -115,7 +115,7 @@ class AdminCusUpdate:
         customer.address = self.cusaddress.get()
         customer.username = None
         customer.password = None
-        
+
         status = customer.enterDatatoDatabase(customer.name,customer.title,customer.dob,customer.gender,customer.contactNo,customer.idNo,customer.email,customer.nationality,customer.address,customer.username,customer.password)
 
     def updateCusData(self):
@@ -136,7 +136,7 @@ class AdminCusUpdate:
 
             msg,status = Customer.updateDatatoDatabase(name,title,dob,gender,contactNo,idNo,email,nationality,address,entered)
             messagebox.showinfo('message', msg)
-        
+
         else:
             msg = "Set search parameters to Customer_ID"
             messagebox.showinfo('message', msg)
@@ -154,7 +154,7 @@ class AdminCusUpdate:
             self.cusaddress.set("")
             self.clickedOption.set("")
             self.dataEntered.set("")
-    
+
     def deleteCusData(self):
         option = self.clickedOption.get()
         entered = self.dataEntered.get()
@@ -174,7 +174,7 @@ class AdminCusUpdate:
             self.cusemail.set("")
             self.cusnationality.set("")
             self.cusaddress.set("")
-    
+
     def clearWindow(self):
         self.clickedOption.set("Customer_ID")
         self.dataEntered.set("")

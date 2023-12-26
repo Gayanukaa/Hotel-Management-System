@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter import messagebox 
+from tkinter import messagebox
 from Classes.CenterFunction import center
 from Classes.Customer import Customer
 
@@ -16,7 +16,7 @@ class CustomerSignUp:
         Label(self.root, image=imgSignUp).place(x=0, y=0,relwidth=1,relheight=1)
 
         #self.root.iconbitmap("Images/hnet.com-image.ico")  #For MacOS
-        #self.root.iconphoto(False, PhotoImage(file = "Images/hnet.com-image.png")) #For Windows        
+        #self.root.iconphoto(False, PhotoImage(file = "Images/hnet.com-image.png")) #For Windows
 
         self.cusname= StringVar()
         self.cuspassw= StringVar()
@@ -37,7 +37,7 @@ class CustomerSignUp:
         Label(frame1,text ="Title").place(x=20,y=20)
         titleOp = ["Mr.","Ms.","Mrs."] # Dropdown menu options
         self.clickedTitle = StringVar() # datatype of menu text
-        self.clickedTitle.set("") # initial menu text  
+        self.clickedTitle.set("") # initial menu text
         cusTitle = OptionMenu(frame1,self.clickedTitle ,*titleOp ).place(x=120,y=20)
         Label(frame1,text ="Name").place(x=300,y=20)
         cusName = Entry(frame1,textvariable = self.cusname, font=('calibre',10,'normal')).place(x=400,y=20)
@@ -51,7 +51,7 @@ class CustomerSignUp:
         Label(frame1,text ="Gender").place(x=300,y=120)
         genderOp = ["Male","Female","Prefer not to say"] # Dropdown menu options
         self.clickedGen = StringVar() # datatype of menu text
-        self.clickedGen.set("") # initial menu text  
+        self.clickedGen.set("") # initial menu text
         cusGender = OptionMenu(frame1,self.clickedGen ,*genderOp ).place(x=400,y=120) # Create Dropdown menu
         Label(frame1,text ="ID No.").place(x=570,y=120)
         cusId = Entry(frame1,textvariable = self.cusidNo, font=('calibre',10,'normal')).place(x=670, y=120)
@@ -77,13 +77,13 @@ class CustomerSignUp:
         Button(frame2,text="Create Account",relief=RAISED,command=self.sendCusData).place(x=180,y=10)
 
         self.root.mainloop()
-    
+
     def validation(self):
             special_ch = ['~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '{', '}', '[', ']', '|', '\\', '/', ':', ';', '"', "'", '<', '>', ',', '.', '?']
             password = self.cuspassw.get()
             conPassword = self.cusConpass.get()
             msg = ""
-                
+
             if len(password) == 0: msg = 'Password can\'t be empty \n'
             elif not(password == conPassword): msg = 'Passwords do not match \n'
             else:
@@ -99,11 +99,11 @@ class CustomerSignUp:
                     if len(password) < 8:
                         msg = 'Password must be minimum of 8 characters! \n'
                     else:
-                        msg = 'Password Accepted!' 
+                        msg = 'Password Accepted!'
                 except Exception as ep:
                     messagebox.showerror('error', ep)
-            messagebox.showinfo('message', msg)   
-            
+            messagebox.showinfo('message', msg)
+
     def sendCusData(self):
         customer = Customer()
         customer.name = self.cusname.get()
@@ -117,7 +117,7 @@ class CustomerSignUp:
         customer.address = self.cusaddress.get()
         customer.username = self.cususername.get()
         customer.password = self.cuspassw.get()
-        
+
         status = customer.enterDatatoDatabase(customer.name,customer.title,customer.dob,customer.gender,customer.contactNo,customer.idNo,customer.email,customer.nationality,customer.address,customer.username,customer.password)
         if(status):
             self.cusname.set("")

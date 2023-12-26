@@ -130,15 +130,26 @@ class AdminCheckIn:
 
     def checkInCustomer(self):
         print("Customer balance collected")
-        roomNO = self.roomNo.get()
         try:
             connection2 = sqlite3.connect("Databases/Hotel_Database.db")
             cursorRm =connection2.cursor()
-            sqln = """update Room_Details set Status = ? where RoomNo = ?"""
-            data = ["CheckedIn",roomNO]
-            cursorRm.execute(sqln,data)
-            connection2.commit()
-            connection2.close()
+            data = "Status"
+            goal = "RoomNo"
+            constrain = self.roomNo.get()
+            cursorRm.execute("select %s from Room_Details where %s=?" % (data, goal), (constrain,))
+            valideData = cursorRm.fetchall()
+            status = valideData[0][0]
+
+            if(status == "Booked"):
+                sqln = """update Room_Details set Status = ? where RoomNo = ?"""
+                data = ["CheckedIn",self.roomNo.get()]
+                cursorRm.execute(sqln,data)
+                connection2.commit()
+                connection2.close()
+                self.root.destroy
+            else:
+                connection2.close()
+                messagebox.showerror("Error","Room already in Use or not Booked")
         except sqlite3.Error as error:
             print(error)
         except IndexError as error:
@@ -160,7 +171,7 @@ class AdminCheckIn:
                 cursorCus.execute(sqln,data)
                 connection1.commit()
                 connection1.close()
-                messagebox.showerror("Message","Customer Checked In")
+                messagebox.showerror("Message","Customer Checked In or not Booked")
                 self.root.destroy
             else:
                 connection1.close()

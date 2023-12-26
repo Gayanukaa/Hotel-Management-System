@@ -8,7 +8,7 @@ cursorRm =connection2.cursor()  #Creating a cursor to handle database
 #cursorRm.execute('insert into Room_Data (Room_Type,Charge,Capacity) values("Single",10000,1),("Double",15000,2),("Triple",20000,3),("Quad",25000,4),("Queen",30000,2),("King",34000,2),("Twin",21000,2),("Suite",50000,5)')
 
 #cursorRm.execute('CREATE TABLE Room_Details ("RoomNo" text,"Category" text,"Floor" text,"Status" text,"View" text)')
-""" 
+"""
 rooms=[("410","Twin","4","Available","City View"),
 ("411","Twin","4","Available","City View"),
 ("412","Twin","4","Available","Ocean View"),
@@ -35,7 +35,7 @@ class Rooms:
         self.status = None
         self.view = None
         self.booking = None
-    
+
     def getAvailableRooms():
         connection2 = sqlite3.connect("Databases/Hotel_Database.db")
         cursorRm =connection2.cursor()
@@ -65,7 +65,7 @@ class Rooms:
             msg = "Details Already Exist"
             messagebox.showinfo('message', msg)
             return False
-        
+
     def getCheckIn():
         try:
             connection1 = sqlite3.connect("Databases/Hotel_Database.db")
@@ -167,7 +167,7 @@ class Rooms:
             return str(error)
         except IndexError as error:
             return str(error)
-        
+
     def bookRoom(self,roomNo):
         try:
             connection2 = sqlite3.connect("Databases/Hotel_Database.db")
@@ -185,7 +185,7 @@ class Rooms:
             print(error)
             return False
 
-""" 
+"""
 connection2.commit() #Saving database
 connection2.close() #Closing datbase
  """

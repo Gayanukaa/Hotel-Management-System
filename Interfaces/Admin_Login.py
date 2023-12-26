@@ -54,24 +54,24 @@ class AdminLogin:
         Button(self.root,text="Display Room Status",command=self.View).place(x=630,y=150)
 
         self.root.mainloop()
- 
+
     def View(self):
         connection = sqlite3.connect("Databases/Hotel_Database.db")
         cursor = connection.cursor()
         cursor.execute("SELECT Category,View,Floor,Status FROM Room_Details order by Floor")
-        rows = cursor.fetchall()    
+        rows = cursor.fetchall()
 
         for row in rows:
-            self.tree.insert("", tkinter.END, values=row)        
+            self.tree.insert("", tkinter.END, values=row)
 
         connection.close()
 
     def logAdminProcess(self):
         username = self.admUsername.get()
         password = self.admPassword.get()
-        
+
         msg,status = Admin.validateLogin(username,password)
-        
+
         messagebox.showinfo('message', msg)
         if(status):
             AdminInterface(self.root,username)

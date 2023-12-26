@@ -36,7 +36,7 @@ class AdminRoomUpdate:
 
         Label(frame1,text ="Category").place(x=30,y=30)
         categoryOp = ["Single","Double","Triple","Quad","Queen","King","Twin","Suite"] # Dropdown menu options
-        self.clickedCategory.set("") # initial menu text  
+        self.clickedCategory.set("") # initial menu text
         OptionMenu(frame1,self.clickedCategory ,*categoryOp ).place(x=130,y=30)
         Label(frame1,text ="Floor").place(x=30,y=80)
         Entry(frame1,textvariable = self.roomFloor, font=('calibre',10,'normal')).place(x=130,y=80)
@@ -44,11 +44,11 @@ class AdminRoomUpdate:
         Entry(frame1,textvariable = self.roomNo, font=('calibre',10,'normal')).place(x=130,y=130)
         Label(frame1,text ="Status").place(x=30,y=180)
         statusOp = ["Available","Booked","Repairing"] # Dropdown menu options
-        self.clickedStatus.set("") # initial menu text  
+        self.clickedStatus.set("") # initial menu text
         OptionMenu(frame1,self.clickedStatus ,*statusOp ).place(x=130,y=180)
         Label(frame1,text ="View").place(x=30,y=230)
         viewOp = ["City View","Ocean View"] # Dropdown menu options
-        self.clickedView.set("") # initial menu text  
+        self.clickedView.set("") # initial menu text
         OptionMenu(frame1,self.clickedView ,*viewOp ).place(x=130,y=230)
         Label(frame1,text ="Price").place(x=30,y=280)
         Entry(frame1,textvariable = self.roomPrice, font=('calibre',10,'normal')).place(x=130,y=280)
@@ -79,18 +79,18 @@ class AdminRoomUpdate:
         Button(frame2,text="Clear",relief=RAISED,command=self.clearWindow).place(x=370,y=350)
 
         self.root.mainloop()
-    
+
     def showData(self):
-        entered = self.searchNo.get()        
+        entered = self.searchNo.get()
         data = Rooms.getData(entered)
-        
+
         try:
             self.roomNo.set(data[0][0])
             self.clickedCategory.set(data[0][1])
             self.roomFloor.set(data[0][2])
             self.clickedStatus.set(data[0][3])
             self.clickedView.set(data[0][4])
-            
+
             price = Rooms.getPrice(data[0][1])
             self.roomPrice.set(price)
         except IndexError as error:
@@ -103,21 +103,21 @@ class AdminRoomUpdate:
         goal = "RoomNo"
         constrain = entered
         cursor1.execute("select %s from Room_Details where %s=?" % (data, goal), (constrain,))
-        rows = cursor1.fetchall()    
+        rows = cursor1.fetchall()
         connection.close()
 
         for row in rows:
-            self.tree.insert("", tkinter.END, values=row) 
-            
+            self.tree.insert("", tkinter.END, values=row)
+
     def addRoomData(self):
         roomNO = self.roomNo.get()
         category = self.clickedCategory.get()
         floor = self.roomFloor.get()
         status = self.clickedStatus.get()
         view = self.clickedView.get()
-        
+
         status = Rooms.enterDatatoDatabase(roomNO,category,floor,status,view)
-    
+
     def updateRoomData(self):
         entered = self.searchNo.get()
         status = True
@@ -138,7 +138,7 @@ class AdminRoomUpdate:
             self.clickedView.set("")
             self.roomPrice.set("")
             self.searchNo.set("")
-    
+
     def deleteRoomData(self):
         option = self.searchNo.get()
         msg,status = Rooms.deleteRoomfromDatabase(option)

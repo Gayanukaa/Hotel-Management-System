@@ -51,7 +51,7 @@ class CusBookRoom:
 
 
         Label(self.root,text ="Book Room",font=('calibre',20,'normal')).place(x=450,y=50)
-        
+
         frame1 = Frame(self.root,bg="grey")
         frame1.place(x=50, y=100, width=900, height=170)
 
@@ -112,7 +112,7 @@ class CusBookRoom:
         Button(self.root,text="Clear",relief=RAISED,command=self.clearWindow).place(x=570,y=540)
 
         self.root.mainloop()
-    
+
     def searchRoom(self):
         checkIn = self.checkInDate.get()
         checkOut = self.checkOutDate.get()
@@ -129,8 +129,8 @@ class CusBookRoom:
             case "All Inclusive": self.additionalPrice.set("24 hours room/ 3 meals/other")
             case _: self.additionalPrice.set("None")
 
-        status = (Booking.compareDates(checkIn,checkOut)) 
-        
+        status = (Booking.compareDates(checkIn,checkOut))
+
         if (childAges == "Ages under 12 - Enter as X,X," or childAges == 0 or childAges == '-'):
             childAges = None
         else:
@@ -205,7 +205,7 @@ class CusBookRoom:
 
     def clearWindow(self):
         self.checkInDate.set("")
-        self.checkOutDate.set("")        
+        self.checkOutDate.set("")
         self.adultCount.set("")
         self.childCount.set("")
         self.childAges.set("Ages under 12 - Enter as X,X,")

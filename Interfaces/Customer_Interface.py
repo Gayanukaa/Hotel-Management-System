@@ -17,7 +17,7 @@ class CustomerInterface:
         self.root.update()
         self.root.title("Customer Main Page")
         self.root.resizable(False, False)
-        center(self.root,1000,600)    
+        center(self.root,1000,600)
 
         self.adultCount = StringVar()
         self.childCount = StringVar()
@@ -35,7 +35,7 @@ class CustomerInterface:
         textDT = "Today's date:  %s.%s.%s" % (str(temp.day).zfill(2), str(temp.month).zfill(2), temp.year)
         textDT = textDT + "   Time now: %s:%s:%s" % (str(temp.hour).zfill(2), str(temp.minute).zfill(2), str(temp.second).zfill(2))
         Label(self.root,text=textDT).place(x=400,y=50)
-        
+
         frame1 = Frame(self.root,bg="grey")
         frame1.place(x=70, y=140, width=200, height=350)
 
@@ -67,7 +67,7 @@ class CustomerInterface:
         Button(self.root,text="Search",relief=RAISED,command=self.showPossibleRooms).place(x=590,y=250)
 
         self.root.mainloop()
-    
+
     def showPossibleRooms(self):
         inDate = self.checkINdate.get()
         outDate = self.checkOutdate.get()
@@ -78,7 +78,7 @@ class CustomerInterface:
         if(inDate == None or outDate == None or noOfAdults == '' or noOfChildren == ''):
             msg = "Enter values"
             messagebox.showerror("Error",msg)
-        
+
         else:
             try:
                 noOfChildren = int(noOfChildren)
@@ -100,16 +100,16 @@ class CustomerInterface:
             print(bookableRooms)
 
             #openPossibleRoomsWindow(rooms)
-    
+
     def openCusProfile(self):
         CustomerProfile(self.root,self.username)
 
     def openRoomBooking(self):
         CusBookRoom(self.root,self.username)
-    
+
     def openRoomDetails(self):
         RoomDetails(self.root)
-    
+
     def openBookingDetails(self):
         CusBookDetails(self.root)
 

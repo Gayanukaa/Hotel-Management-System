@@ -10,7 +10,7 @@ class CustomerProfile:
         self.root.update()
         self.root.title("Customer Profile Page")
         self.root.resizable(False, False)
-        center(self.root,1000,600)    
+        center(self.root,1000,600)
 
         self.img =  PhotoImage(file="Images/Backgrounds/Gradient_background_7.png")
         Label(self.root, image=self.img).place(x=0, y=0,relwidth=1,relheight=1)
@@ -50,9 +50,9 @@ class CustomerProfile:
         Label(frame2,text ="Username : " + self.username, font=('calibre',15,'normal')).place(x=30,y=30)
         Label(frame2,text ="Password : " + self.cuspassword, font=('calibre',15,'normal')).place(x=210,y=30)
         Button(frame2,text="Change Password",relief=RAISED,command=self.changePassword).place(x=400,y=30)
-        
+
         self.root.mainloop()
-    
+
     def searchData(self):
         option = "Username"
         entered = self.username
@@ -72,7 +72,7 @@ class CustomerProfile:
             self.cuspassword = data[0][11]
         else:
             messagebox.showerror("Error","Please enter data to search")
-    
+
     def changePassword(self):
         self.chgePwdWindow = Toplevel(self.root)
         self.chgePwdWindow.geometry("500x300")

@@ -1,5 +1,5 @@
 import itertools
-from tkinter import *  
+from tkinter import *
 import sqlite3
 from tkinter import messagebox
 
@@ -44,7 +44,7 @@ class Customer:
         msg = "Details Entered Successfully \nCustomerID: " + customerID
         messagebox.showinfo('message', msg)
         return True
-    
+
     def validateLogin(username,password):
         msg = ""
         try:
@@ -80,7 +80,7 @@ class Customer:
         cursorCus.execute("select %s from Customer_Data where %s=?" % (data, goal), (constrain,))
         valideData = cursorCus.fetchall()
         return valideData[0][0]
-    
+
     def getNoofCustomers():
         try:
             connection1 = sqlite3.connect("Databases/Hotel_Database.db")
@@ -90,13 +90,13 @@ class Customer:
             constrain = "CheckedIn"
             cursorCus.execute("select %s from Customer_Data where %s=?" % (data, goal), (constrain,))
             valideData1 = cursorCus.fetchall()
-            
+
             data = "Customer_ID"
             goal = "Status"
             constrain = "Booked"
             cursorCus.execute("select %s from Customer_Data where %s=?" % (data, goal), (constrain,))
             valideData2 = cursorCus.fetchall()
-            
+
             return (len(valideData1) + len(valideData2))
         except sqlite3.Error as error:
             msg = error
@@ -117,7 +117,7 @@ class Customer:
         except IndexError as error:
             msg = "Data not matching. Try Again"
             return msg,False
-   
+
     def updateDatatoDatabase(name,title,dob,gender,contactNo,idNo,email,nationality,address,entered):
         try:
             connection1 = sqlite3.connect("Databases/Hotel_Database.db")
@@ -182,7 +182,7 @@ class Customer:
             msg = "Data not matching. Try Again"
             print(error)
             return msg,False
-        
+
     def updatePassword(username,password):
         try:
             connection1 = sqlite3.connect("Databases/Hotel_Database.db")
@@ -198,7 +198,7 @@ class Customer:
         except IndexError as error:
             print(error)
             return False
-        
+
     def bookingCompleted(self,customerID):
         try:
             connection1 = sqlite3.connect("Databases/Hotel_Database.db")
@@ -226,7 +226,7 @@ class Customer:
         except IndexError as error:
             print(error)
             return False
-  
+
 """
 #cursorCus.execute('delete from Customer_Data where Name="Nimal Bandara"')
 
