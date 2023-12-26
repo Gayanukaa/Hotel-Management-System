@@ -19,7 +19,6 @@ class AdminCheckOut:
         Label(self.root, image=self.img).place(x=0, y=0,relwidth=1,relheight=1)
 
         self.dataEntered = StringVar()
-        self.bookingID = StringVar
         self.cusname = StringVar()
         self.contactNo = StringVar()
         self.checkIn = StringVar()
@@ -94,7 +93,6 @@ class AdminCheckOut:
 
     def clearWindow(self):
         self.dataEntered.set("")
-        self.bookingID.set("")
         self.cusname.set("")
         self.contactNo.set("")
         self.checkIn.set("XX.XX.XXXX")
@@ -147,7 +145,7 @@ class AdminCheckOut:
 
                 Label(framePinner, text="No. of Days: " + str(total_days), bg="white", fg="black", relief="solid",font=('calibre',15,'normal')).place(x=220, y=100)
 
-                Label(frameP, text="Total: ", bg="grey", fg="red", relief="solid",font=('calibre',20,'normal')).place(x=50, y=360)
+                Label(frameP, text="Total: ", bg="white", fg="red", relief="solid",font=('calibre',20,'normal')).place(x=50, y=360)
                 Label(frameP, text=self.total.get(), bg="grey", fg="black", relief="solid",font=('calibre',20,'normal')).place(x=350, y=360)
             else:
                 frameP = Frame(self.root, bg="white", width=500, height=400)
@@ -193,13 +191,13 @@ class AdminCheckOut:
             valideData = cursorCus.fetchall()
             status = valideData[0][0]
 
-            if(status == "Booked"):
+            if(status == "CheckedIn"):
                 sqln = """update Customer_Data set Status = ? where Name = ?"""
                 data = ["Registered",self.cusname.get()]
                 cursorCus.execute(sqln,data)
                 connection1.commit()
                 connection1.close()
-                messagebox.showerror("Message","Customer Checked In or not Booked")
+                messagebox.showerror("Message","Customer Checked Out")
                 self.root.destroy
             else:
                 connection1.close()
