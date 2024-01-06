@@ -16,31 +16,38 @@ class AdminReport:
         self.admUsername= StringVar()
         self.admPassword = StringVar()
 
-        imgAdminLogin = PhotoImage(file="Images/Hotel_Admin_Login.png")
-        Label(self.root,image=imgAdminLogin).place(x=0,y=0,relwidth=1,relheight=1)
+        img = PhotoImage(file="Images/Backgrounds/Gradient_background_2.png")
+        Label(self.root,image=img).place(x=0,y=0,relwidth=1,relheight=1)
 
         #self.root.iconbitmap("Images/hnet.com-image.ico")  #For MacOS
         #self.root.iconphoto(False, PhotoImage(file = "Images/hnet.com-image.png")) #For Windows
 
+        Label(self.root,text ="Booking Report",font=('calibre',25,'normal')).place(x=400,y=30)
+
         data = self.fetch_data_from_database()
 
         frame = Frame(self.root, bg="grey")
-        frame.place(x=0, y=0, width=1000, height=600)
+        frame.place(x=100, y=100, width=800, height=400)
 
-        tree = ttk.Treeview(self.root)
-        tree["columns"] = ("Booking ID", "CustomerID", "Name", "Check In", "Check Out", "No. of Adults", "No. of Child", "Meal Plan", "Room ID", "Total")
+        tree = ttk.Treeview(frame)
+        tree["columns"] = ("Booking ID", "Customer ID", "Name", "Check In", "Check Out", "No. of Adults", "No. of Child", "Meal Plan", "Room ID", "Total")
 
-        # Define columns
         tree.column("#0", width=0, stretch=NO)
         for col in tree["columns"]:
             tree.column(col, anchor=CENTER)
             tree.heading(col, text=col, anchor=CENTER)
 
-        # Insert data into the Treeview
+        vsb = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)
+        vsb.pack(side="right", fill="y")
+        tree.configure(yscrollcommand=vsb.set)
+
+        hsb = ttk.Scrollbar(frame, orient="horizontal", command=tree.xview)
+        hsb.pack(side="bottom", fill="x")
+        tree.configure(xscrollcommand=hsb.set)
+
         for row in data:
             tree.insert("", END, values=row)
 
-        # Pack the Treeview into the root window
         tree.pack(expand=True, fill="both")
 
         self.root.mainloop()
