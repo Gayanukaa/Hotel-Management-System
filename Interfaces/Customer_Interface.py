@@ -40,11 +40,10 @@ class CustomerInterface:
         frame1.place(x=70, y=140, width=200, height=350)
 
         Button(frame1,text="Profile",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openCusProfile).pack(padx = 10, pady= 20)
-        Button(frame1,text="Book a Room",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openRoomBooking).pack(padx = 10, pady= 10)
-        Button(frame1,text="Booking Details",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openBookingDetails).pack(padx = 10, pady= 10)
-        Button(frame1,text="Room Details",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openRoomDetails).pack(padx = 10, pady= 10)
-        Button(frame1,text="Policies",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold")).pack(padx = 10, pady= 10)
-        Button(frame1,text="Sign Out",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.signout).pack(padx = 10, pady= 10)
+        Button(frame1,text="Book a Room",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openRoomBooking).pack(padx = 10, pady= 15)
+        Button(frame1,text="Booking Details",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openBookingDetails).pack(padx = 10, pady= 15)
+        Button(frame1,text="Room Details",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openRoomDetails).pack(padx = 10, pady= 15)
+        Button(frame1,text="Sign Out",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.signout).pack(padx = 10, pady= 15)
 
         Label(self.root,text ="Check IN").place(x=400,y=150)
         self.checkINdate = StringVar()
