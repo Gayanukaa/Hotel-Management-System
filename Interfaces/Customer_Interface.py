@@ -97,9 +97,10 @@ class CustomerInterface:
 
             for i in bookableRooms:
                 rooms.append(i[0])
-            print(bookableRooms)
 
-            #openPossibleRoomsWindow(rooms)
+            formatted_string = '\n'.join([f'{room} Room at Rs. {price}, base price for {people} people' for room, price, people in bookableRooms])
+            msg = "Avaiable rooms for the entered details are\n\n" + formatted_string + "\n\n Please proceed to the booking window."
+            messagebox.showinfo(title="Available Rooms",message=msg)
 
     def openCusProfile(self):
         CustomerProfile(self.root,self.username)
