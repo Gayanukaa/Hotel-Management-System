@@ -2,7 +2,7 @@ import sqlite3
 from tkinter import *
 from tkinter import ttk
 from Classes.CenterFunction import center
-
+from reportlab.pdfgen import canvas
 class AdminReport:
     def __init__(self,root):
         self.root = root
@@ -11,10 +11,6 @@ class AdminReport:
         self.root.title("Admin Booking Report")
         self.root.resizable(False, False)
         center(self.root,1000,600)
-
-        self.name = None
-        self.admUsername= StringVar()
-        self.admPassword = StringVar()
 
         img = PhotoImage(file="Images/Backgrounds/Gradient_background_2.png")
         Label(self.root,image=img).place(x=0,y=0,relwidth=1,relheight=1)
@@ -50,6 +46,8 @@ class AdminReport:
 
         tree.pack(expand=True, fill="both")
 
+        Button(self.root,text="Printed",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.export_to_pdf(tree)).place(x=450,y=550)
+
         self.root.mainloop()
 
 
@@ -62,3 +60,17 @@ class AdminReport:
         connection.close()
 
         return data
+
+    def export_to_pdf(self,tree):
+        pdf_filename = "Booking_Report.pdf"
+        c = canvas.Canvas(pdf_filename, pagesize=(1000, 500))
+        width, height = 1000, 500
+        x_offset = 50
+        y_offset = height - 50
+
+        for col, col_name in enumerate(tree["columns"]):
+            c.drawString(x_offset + col * 100, y_offset, col_name)
+            for row, item in enumerate(tree.get_children()):
+                c.drawString(x_offset + col * 100, y_offset - (row + 1) * 20, tree.item(item, 'values')[col])
+
+        c.save()
