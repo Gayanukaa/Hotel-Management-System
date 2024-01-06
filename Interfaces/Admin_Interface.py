@@ -41,12 +41,11 @@ class AdminInterface:
         frame1.place(x=70, y=140, width=200, height=400)
 
         Button(frame1,text="Customer",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openAdmUpdateCusWindow).pack(padx = 10, pady= 20)
-        Button(frame1,text="Check In",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openAdminCheckInWindow).pack(padx = 10, pady= 10)
-        Button(frame1,text="Check Out",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openAdminCheckOutWindow).pack(padx = 10, pady= 10)
-        Button(frame1,text="Rooms",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openAdmRoomUpdateWindow).pack(padx = 10, pady= 10)
-        Button(frame1,text="Reports",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openAdminReportWindow).pack(padx = 10, pady= 10)
-        Button(frame1,text="Profile",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold")).pack(padx = 10, pady= 10)
-        Button(frame1,text="Sign Out",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.signout).pack(padx = 10, pady= 10)
+        Button(frame1,text="Check In",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openAdminCheckInWindow).pack(padx = 10, pady= 15)
+        Button(frame1,text="Check Out",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openAdminCheckOutWindow).pack(padx = 10, pady= 15)
+        Button(frame1,text="Rooms",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openAdmRoomUpdateWindow).pack(padx = 10, pady= 15)
+        Button(frame1,text="Reports",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.openAdminReportWindow).pack(padx = 10, pady= 15)
+        Button(frame1,text="Sign Out",relief=RAISED,borderwidth=3,font=("times new roman",15,"bold"),command=self.signout).pack(padx = 10, pady= 15)
 
         temp1 = self.getAvailableRooms()
         textAvRooms = "Rooms Available: \n(" + str(temp1) + ")"
