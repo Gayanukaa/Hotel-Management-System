@@ -2,7 +2,8 @@
 
 ### Python OOP and GUI + SQLite3 DBMS
 
-Project coded using Visual Studio Code
+Project coded using Visual Studio Code.\
+Self-study project to overview OOP, DBMS and GUI.
 
 Execute file to run
 
@@ -12,9 +13,9 @@ Execute file to run
 
 Run Hotel-Management-System/Interfaces/Landing_Page.py
 
-- Libraries used - TKinter, SQLite3
-- Room booking limited to one per transaction
-- Child age considered 12
+- Libraries used - TKinter, SQLite3, datetime, ReportLab
+- Room booking is limited to one transaction per customer
+- Offers both admin and customer views
 
 ## Documentation
 
@@ -22,6 +23,7 @@ Run Hotel-Management-System/Interfaces/Landing_Page.py
 
 ## Contributing
 
+Appreciate any help with the issues.\
 Contributions are always welcome!\
 Please adhere to this project's `code of conduct`.
 
