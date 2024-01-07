@@ -17,6 +17,7 @@ class CustomerInterface:
         self.root.update()
         self.root.title("Customer Main Page")
         self.root.resizable(False, False)
+        self.root.wm_attributes('-transparent')
         center(self.root,1000,600)
 
         self.adultCount = StringVar()
@@ -30,11 +31,11 @@ class CustomerInterface:
         self.username = username
         customerName = Customer.getCustomerName(self.username)
         textIntro = "Welcome " + customerName
-        Label(self.root,text =textIntro).place(x=90,y=50)
+        Label(self.root,text=textIntro,font=('calibre',20,'normal')).place(x=70,y=50)
         temp = datetime.datetime.now()
         textDT = "Today's date:  %s.%s.%s" % (str(temp.day).zfill(2), str(temp.month).zfill(2), temp.year)
         textDT = textDT + "   Time now: %s:%s:%s" % (str(temp.hour).zfill(2), str(temp.minute).zfill(2), str(temp.second).zfill(2))
-        Label(self.root,text=textDT).place(x=400,y=50)
+        Label(self.root,text=textDT,font=('calibre',20,'normal')).place(x=400,y=50)
 
         frame1 = Frame(self.root,bg="grey")
         frame1.place(x=70, y=140, width=200, height=350)
@@ -54,16 +55,19 @@ class CustomerInterface:
         Label(self.root,text ="No. of Adults").place(x=650,y=150)
         Entry(self.root,textvariable = self.adultCount,font=('calibre',10,'normal')).place(x=750,y=150)
 
-        Label(self.root,text ="Check OUT").place(x=400,y=200)
+        Label(self.root,text ="Check OUT").place(x=400,y=190)
         self.checkOutdate = StringVar()
-        DateEntry(self.root,selectmode='day',textvariable=self.checkOutdate).place(x=500,y=200)
+        DateEntry(self.root,selectmode='day',textvariable=self.checkOutdate).place(x=500,y=190)
         def my_upd2(*args):
             self.checkOutdate.set(self.checkOutdate.get())
         self.checkOutdate.trace('w',my_upd2)
-        Label(self.root,text ="No. of Children").place(x=650,y=200)
-        Entry(self.root,textvariable = self.childCount,font=('calibre',10,'normal')).place(x=750,y=200)
+        Label(self.root,text ="No. of Children").place(x=650,y=190)
+        Entry(self.root,textvariable = self.childCount,font=('calibre',10,'normal')).place(x=750,y=190)
 
-        Button(self.root,text="Search",relief=RAISED,command=self.showPossibleRooms).place(x=590,y=250)
+        Button(self.root,text="Search",relief=RAISED,command=self.showPossibleRooms).place(x=600,y=230)
+
+        self.imgP =  PhotoImage(file="Images/Hotel_Pool.png")
+        Label(self.root, image=self.imgP, highlightthickness=0,borderwidth=0).place(x=340, y=270)
 
         self.root.mainloop()
 

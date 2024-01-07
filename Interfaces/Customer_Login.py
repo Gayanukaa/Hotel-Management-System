@@ -47,14 +47,14 @@ class CustomerLogin:
         self.tree.column("#4", anchor=tkinter.CENTER,width=150)
         self.tree.heading("#4", text="Status")
         self.tree.place(x=450,y=200)
-        Button(self.root,text="Display Room Status",command=self.View).place(x=630,y=150)
+        Button(self.root,text="Display Room Status",relief=RAISED,highlightthickness=0, borderwidth=0,command=self.View).place(x=630,y=150)
 
         self.root.mainloop()
 
     def View(self):
         connection = sqlite3.connect("Databases/Hotel_Database.db")
         cursor = connection.cursor()
-        cursor.execute("SELECT Category,View,Floor,Status FROM Room_Details order by Floor")
+        cursor.execute("SELECT Category, View, Floor, Status FROM Room_Details WHERE Status = 'Available' ORDER BY Floor")
         rows = cursor.fetchall()
 
         for row in rows:

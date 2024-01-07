@@ -49,17 +49,17 @@ class RoomDetails:
 
         Label(self.roomFrame, text=title, font=("times new roman", 20, "bold")).place(x=540, y=20)
 
-        self.dimensionFrame = Frame(self.roomFrame, width=160, height=55)
+        self.dimensionFrame = Frame(self.roomFrame, width=160, height=50,bg="white")
         self.dimensionFrame.place(x=420, y=80)
         self.dimension = PhotoImage(file="Images/Icons/dimensions_icon.png")
         Label(self.dimensionFrame, image=self.dimension).place(x=0, y=0)
-        Label(self.dimensionFrame, text=f"Room Size:\n{size}", font=("times new roman", 15, "bold"), fg="black").place(x=55, y=2)
+        Label(self.dimensionFrame, text=f"Room Size:\n{size}", font=("times new roman", 15, "bold"), fg="black",bg="white").place(x=58, y=2)
 
-        self.wifiFrame = Frame(self.roomFrame, width=150, height=55)
+        self.wifiFrame = Frame(self.roomFrame, width=150, height=50,bg="white")
         self.wifiFrame.place(x=610, y=80)
         self.wifi = PhotoImage(file="Images/Icons/hotel_wifi_icon.png")
         Label(self.wifiFrame, image=self.wifi).place(x=0, y=0)
-        Label(self.wifiFrame, text=wifi, font=("times new roman", 15, "bold"), fg="black").place(x=55, y=2)
+        Label(self.wifiFrame, text=wifi, font=("times new roman", 15, "bold"), fg="black",bg="white").place(x=58, y=2)
 
         Label(self.roomFrame, text=f"Bed Size: {bed_size}", font=("times new roman", 15, "bold")).place(x=420, y=160)
         Label(self.roomFrame, text=f"Max People: {max_people}", font=("times new roman", 15, "bold")).place(x=420, y=200)

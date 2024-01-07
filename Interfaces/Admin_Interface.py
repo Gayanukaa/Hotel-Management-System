@@ -31,11 +31,11 @@ class AdminInterface:
 
         username = Admin.getAdminName(username)
         textIntro = "Welcome " + username
-        Label(self.root,text =textIntro).place(x=80,y=50)
+        Label(self.root,text =textIntro,font=('calibre',20,'normal')).place(x=70,y=50)
         temp = datetime.datetime.now()
         textDT = "Today's date:  %s.%s.%s" % (str(temp.day).zfill(2), str(temp.month).zfill(2), temp.year)
         textDT = textDT + "   Time now: %s:%s:%s" % (str(temp.hour).zfill(2), str(temp.minute).zfill(2), str(temp.second).zfill(2))
-        Label(self.root,text=textDT).place(x=400,y=50)
+        Label(self.root,text=textDT,font=('calibre',20,'normal')).place(x=400,y=50)
 
         frame1 = Frame(self.root)
         frame1.place(x=70, y=140, width=200, height=400)
@@ -53,9 +53,12 @@ class AdminInterface:
         textNofCus  = "No. of Customers: \n(" + str(temp2) + ")"
         temp3 = Rooms.getCheckIn()
         textTdChkIn = "Today's Check In: \n(" + str(temp3) + ")"
-        Label(self.root,text=textAvRooms).place(x=400,y=150)
-        Label(self.root,text=textTdChkIn).place(x=550,y=150)
-        Label(self.root,text=textNofCus).place(x=700,y=150)
+        Label(self.root,text=textAvRooms).place(x=400,y=140)
+        Label(self.root,text=textTdChkIn).place(x=550,y=140)
+        Label(self.root,text=textNofCus).place(x=700,y=140)
+
+        self.imgP =  PhotoImage(file="Images/Hotel_Admin.png")
+        Label(self.root, image=self.imgP, highlightthickness=0,borderwidth=0).place(x=340, y=190)
 
         self.root.mainloop()
 
